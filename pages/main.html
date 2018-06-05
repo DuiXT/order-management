@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单管理系统</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!--<link rel="icon" href="../resources/img/icom.ico" type="image/x-icon">-->
+    <link rel="Shortcut Icon" href="../resources/img/5.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="../resources/bower_components/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../resources/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../resources/plugins/toastr/css/angular-toastr.min.css">
+    <!-- Ionicons -->
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../resources/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../resources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../resources/css/main.css">
+    <link type="text/css" rel="stylesheet" href="../resources/bower_components/bootstrap-datepicker/bootstrap-datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="../resources/bower_components/bootstrap/css/bootstrap-treeview.min.css">
+    <link rel="stylesheet" href="../resources/plugins/viewer/css/viewer.min.css">
+    <link rel="stylesheet" href="../resources/dist/css/order.css">
+    <link rel="stylesheet" href="../resources/css/checkbox.css">
+    <link rel="stylesheet" href="../resources/dist/css/mytree.css">
+    <link rel="stylesheet" href="../resources/css/openBtn.css">
+    <link rel="stylesheet" href="../resources/css/styles.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini"  ng-controller="mainCont" ng-app="orderManagement">
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="javascript:;" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">AS</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg" style="font-size: 12px">AiShangJinFu</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- 折叠菜单（三个横线）-->
+            <a href="javascript:;" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!--当前登录人信息-->
+                    <li class="dropdown user user-menu" >
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="../resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <span class="hidden-xs" ng-bind="namettt"></span>
+                        </a>
+                        <ul class="dropdown-menu" style="box-shadow: 0 0 2px #6F6F6F;">
+                            <li class="user-header">
+                                <img src="../resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <p>
+                                    <span style="font-size:14px;padding-bottom:10px;display:inline-block;">霍尔果斯爱尚企业咨询管理有限公司</span>
+                                    <small ng-bind="namettt"></small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="text-center">
+                                    <a href="javascript:;" style="background:#50AD92;color:#fff;border-radius: 5px;width:100px;"class="btn btn-default btn-flat" ng-click="signOut()">退出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--消息推送-->
+                    <li class="dropdown notifications-menu">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">你有5条消息</li>
+                            <li class="footer"><a href="javascript:;">显示所有</a></li>
+                        </ul>
+                    </li>
+                    <!-- 右侧菜单 -->
+                    <li><a href="javascript:;" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="../resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p ng-bind="namettt"></p>
+                    <!-- 状态 -->
+                    <a href="javascript:;"><i class="fa fa-circle text-success"></i> 在线</a>
+                </div>
+            </div>
+
+            <!-- /.search form -->
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" ng-blur="refreshInter()" ng-model="seconds" ng-init="seconds=30;"  class="form-control" placeholder="刷新时间不得小于30秒">
+                    <span class="input-group-btn" style="background-color: #374850">
+                    <div id="div1" ng-class="{true:'open1',false:'close1'}[open]">
+                        <div id="div2" ng-init="open=true;" ng-class="{true:'open2',false:'close2'}[open]" ng-click="open=!open"></div>
+                    </div>
+              </span>
+                </div>
+            </form>
+            <!-- Sidebar Menu -->
+            <!--<ul class="sidebar-menu" data-widget="tree">-->
+                <!--&lt;!&ndash; Optionally, you can add icons to the links &ndash;&gt;-->
+                <!--<li class="treeview active" >-->
+                    <!--<a href="javascript:;"><i class="fa fa-sitemap"></i> <span>订单管理</span>-->
+                        <!--<span class="pull-right-container">-->
+                <!--<i class="fa fa-angle-left pull-right"></i>-->
+              <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="treeview-menu">-->
+                        <!--<li><a ui-sref="orderList"><i class="fa fa-circle-o"></i>订单列表</a></li>-->
+                        <!--<li><a ui-sref="creditAuditList"><i class="fa fa-circle-o"></i>信审列表</a></li>-->
+                        <!--<li><a ui-sref="photosAuditList"><i class="fa fa-circle-o"></i>照片审核列表</a></li>-->
+                        <!--<li><a ui-sref="repaymentList"><i class="fa fa-circle-o"></i>还款列表</a></li>-->
+                        <!--<li><a ui-sref="overdueList"><i class="fa fa-circle-o"></i>逾期列表</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+
+            <ul class="sidebar-menu" data-widget="tree">
+                <!-- Optionally, you can add icons to the links -->
+                <li class="treeview active" ng-repeat="item in jsonDataTree">
+                    <a href="javascript:;"><i class="fa fa-sitemap"></i> <span ng-bind="item.name"></span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li ng-repeat="item in child"><a href="#{{item.url}}"><i class="fa fa-circle-o"></i><span ng-bind="item.name" style="font-size: 14px"></span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <!-- ng-view内容正文 -->
+    <div class="content-wrapper">
+        <div ui-view=""></div>
+
+    </div>
+
+</div>
+
+<!--alert弹框-->
+<div class="mask" id="mask"></div>
+<div class="dialog" id="alertlog" style="height: 160px;">
+    <div class="dialog-title"> </div>
+    <div class="dialog-content"></div>
+    <div class="dialog-hint" style="text-indent: 0; text-align: center;">{{alertlog}}</div>
+    <div class="row" style="width: auto;">
+        <div class="col-md-4 col-lg-4 col-sm-4"></div>
+        <div class="col-md-4 col-lg-4 col-sm-4">
+            <button class="btn btn-default searching col-md-3  col-lg-3 col-sm-3" style="height:35px;width: 100%;" ng-click="hideAlert()">确定</button>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4"></div>
+    </div>
+</div>
+
+
+
+</body>
+<script src="../resources/bower_components/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../resources/bower_components/bootstrap/js/bootstrap.min.js"></script>
+<script src="../resources/dist/js/select2.full.min.js"></script>
+<script src="../resources/dist/js/adminlte.min.js"></script>
+<script src="../resources/bower_components/angularjs/js/angular-1.5.8.min.js"></script>
+<script src="../resources/bower_components/angularjs/js/angular-ui-router.js"></script>
+<script src="../resources/plugins/viewer/js/myviewer.min.js"></script>
+<script src="../resources/plugins/viewer/js/viewer.min.js"></script>
+<script src="../resources/plugins/toastr/js/angular-toastr.tpls.min.js"></script>
+<script src="../resources/app/app.js"></script>
+<script src="../resources/app/controller/main.js"></script>
+<script src="../resources/bower_components/jQuery/mask.js"></script>
+<!--订单列表-->
+<script src="../resources/app/controller/orderListCont.js"></script>
+<script src="../resources/app/controller/orderDetail.js"></script>
+<!--审核-->
+<script src="../resources/app/controller/creditAuditListCont.js"></script>
+<script src="../resources/app/controller/auditDetail.js"></script>
+<!--照片审核-->
+<script src="../resources/app/controller/photosAuditListCont.js"></script>
+<script src="../resources/app/controller/photosAuditDetail.js"></script>
+<!--还款-->
+<script src="../resources/app/controller/repayListCont.js"></script>
+<script src="../resources/app/controller/repayDetail.js"></script>
+<!--逾期-->
+<script src="../resources/app/controller/overdueListCont.js"></script>
+<script src="../resources/app/controller/overdueDetail.js"></script>
+<!--风控报告-->
+<script src="../resources/app/controller/riskReportCont.js"></script>
+<!--还款配置-->
+<script src="../resources/app/controller/repaymentConfig.js"></script>
+<!--预审列表-->
+<script src="../resources/app/controller/preliminaryListCont.js"></script>
+<script src="../resources/app/controller/preliminaryDetail.js"></script>
+
+<!--商户订单查询-->
+<script src="../resources/app/controller/merchantOrderQueryListCont.js"></script>
+
+<script src="../resources/app/controller/datePickerDir.js"></script>
+<script src="../resources/bower_components/bootstrap/js/bootstrap-treeview.js"></script>
+<script src="../resources/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="../resources/app/directive/auditPhotos.js"></script>
+<script src="../resources/app/directive/auditRes.js"></script>
+<script src="../resources/app/directive/bindCardInfo.js"></script>
+<script src="../resources/app/directive/companyInfo.js"></script>
+<script src="../resources/app/directive/contractInfo.js"></script>
+<script src="../resources/app/directive/customInfo.js"></script>
+<script src="../resources/app/directive/goodsInfo.js"></script>
+<script src="../resources/app/directive/goodsPhotos.js"></script>
+<script src="../resources/app/directive/goodsPhotosAudit.js"></script>
+<script src="../resources/app/directive/remitRes.js"></script>
+<script src="../resources/app/directive/repaymentInfo.js"></script>
+<script src="../resources/app/directive/riskInfo.js"></script>
+<script src="../resources/app/directive/telResch.js"></script>
+<script src="../resources/app/directive/auditOperation.js"></script>
+<script src="../resources/app/directive/auditPicture.js"></script>
+<script src="../resources/app/directive/backList.js"></script>
+<script src="../resources/app/directive/myPagination.js"></script>
+<script src="../resources/app/directive/treeView.js"></script>
+<script src="../resources/app/directive/remarkInfo.js"></script>
+<script src="../resources/app/directive/preliminaryPhotos.js"></script>
+<script src="../resources/app/directive/preliminaryOperation.js"></script>
+</html>

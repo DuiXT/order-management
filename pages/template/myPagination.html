@@ -1,0 +1,27 @@
+<div class=" form-inline">
+    <div class="col-xs-7 padmar0">
+    <ul class="pagination">
+        <li ng-click="pageClick(p,pageOption.size)" ng-repeat="p in page" class="{{pageOption.curr==p?'active':''}}">
+        <a href="javascript:;">{{p}}</a> 
+        </li> 
+    </ul>
+    </div>
+    <div class="col-xs-2 padmar0" style="margin-top: 20px;">
+        <span>每页显示</span>
+        <select class="form-control padmar0" style="margin-left: 10px;margin-right: 10px;height: 30px;" ng-model="pageOption.size" ng-change="changeSize(pageOption.curr,pageOption.size)">
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="35">35</option>
+        </select>
+        <span>条</span>
+    </div>
+    <div class="col-xs-3 padmar0" style="margin-top: 20px;">{{pageOption.curr}}/{{!pageOption.all?1:pageOption.all}}&nbsp;&nbsp;
+        <input class="form-control" style="width: 21%;height: 30px;" type="number" min="1" max="{{pageOption.all}}" ng-model="go">&nbsp;&nbsp;
+        <a class="btn btn-primary btn-sm btn-pad" ng-click="jump(go)">跳转</a>
+        <span style="margin-left: 20px;">共：{{!pageOption.all?1:pageOption.all}}&nbsp;&nbsp;页；</span>
+        <span>&nbsp;&nbsp;&nbsp;{{pageOption.items}}&nbsp;&nbsp;条</span>
+    </div>
+
+</div>

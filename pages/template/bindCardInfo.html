@@ -1,0 +1,190 @@
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <a data-toggle="collapse" data-parent="#orderDetail" data-target="#bindCardInfo">
+                <h4 class="panel-title">
+                    <div class=" add_tit ">&nbsp;&nbsp;&nbsp;绑卡信息</div>
+                </h4>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-md-6 text-right" ng-show="bindcardBtns">
+            <button class="btn btn-green" ng-click="replaceBankInfoOper()">操作记录</button>
+            <button class="btn btn-green" ng-show="btn" ng-click="replaceBankInfo11()">更换银行卡</button>
+        </div>
+    </div>
+    <div id="bindCardInfo" class="row panel-collapse collapse in">
+        <div class="panel-body" ng-hide="panel">
+            <div>暂无数据</div>
+        </div>
+        <div class="panel-body" ng-show="panel">
+            <div class="box-body" style="padding: 14px;">
+                <table id="bankCardInfo" class="table table-bordered table-hover">
+                    <tbody class="text-center">
+                    <tr>
+                        <td><b>卡行</b></td>
+                        <td ng-bind="data.bankName?data.bankName:'-'"></td>
+                        <td><b>卡类型</b></td>
+                        <td ng-bind="data.bankType?data.bankType:'-'"></td>
+                        <td><b>卡号</b></td>
+                        <td ng-bind="data.bankNumber?data.bankNumber:'-'"></td>
+                        <td><b>预留手机号</b></td>
+                        <td ng-bind="data.reservedPhone?data.reservedPhone:'-'"></td>
+                    </tr>
+                    <tr>
+                        <td><b>开户人姓名</b></td>
+                        <td colspan="3" ng-bind="data.accountHolder?data.accountHolder:'-'"></td>
+                        <td><b>开户行信息</b></td>
+                        <td colspan="3" ng-bind="data.bankInformation?data.bankInformation:'-'"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--更换银行卡操作记录-->
+    <div class="modal  fade" id="replaceBankInfoOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >换卡信息操作记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf" style="max-height: 750px;overflow-y: scroll">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="th">
+                            <th>操作人</th>
+                            <th>修改时间</th>
+                            <th>开户人</th>
+                            <th>发卡行</th>
+                            <th>支行</th>
+                            <th>卡号</th>
+                            <th>预留电话</th>
+                            <th>银行卡照片</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="operRecordData">
+                            <td colspan="8" class="text-center">暂时没有操作记录</td>
+                        </tr>
+                        <tr ng-repeat="item in resultList">
+                            <td>{{item.opreator}}</td>
+                            <td>{{item.checkTime}}</td>
+                            <td title="{{item.cardor}}">{{item.cardor |textLengthSet:true:10:'...'}}</td>
+                            <td title="{{item.cardkMaker}}">{{item.cardkMaker |textLengthSet:true:10:'...'}}</td>
+                            <td title="{{item.cardAddress}}">{{item.cardAddress |textLengthSet:true:10:'...'}}</td>
+                            <td>{{item.cardNumber}}</td>
+                            <td>{{item.phone}}</td>
+                            <td><a href="{{item.cardImgUrl}}" target="_blank"><img ng-src="{{item.cardImgUrl}}" width="30px" height="30px"/></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--更换银行卡-->
+    <div class="modal  fade" id="replaceBankInfo-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="closeModal()">
+                        &times;
+                    </button>
+                    <div class="row _head" >
+                        <div class="col-md-3 " style="font-size: 18px;margin: 10px 10px">修改银行卡信息</div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form role="form"  class="formpadding" name="replaceBankInfo" id="replaceBankInfo">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row">
+                                    <label class="col-xs-1 control-label">开户人:</label>
+                                    <div class="col-xs-11">
+                                        <input type="text" class="form-control inpheight bgw"  ng-disabled="true" ng-model="cloneData.accountHolder">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label class="col-md-1 control-label">发卡行:</label>
+                                    <div class="col-md-11" ng-class="{'has-error': replaceBankInfo.cardBank.$error.required && replaceBankInfo.cardBank.$dirty || cardBankChange}">
+                                        <select name="cardBank" class="form-control" ng-model="cloneData.bankCode" ng-required="true" ng-focus="cardBankChange=false;cardTypeError=false">
+                                            <option value="">-请选择-</option>
+                                            <option ng-repeat="x in bankList" value="{{x.name}}">{{x.displayName}}</option>
+                                        </select>
+                                        <span ng-show=" replaceBankInfo.cardBank.$error.required && replaceBankInfo.cardBank.$dirty || cardBankChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                    <div style="margin-left: 90px;color: #a94442" ng-init="cardTypeError=false" ng-show="cardTypeError">卡类型与卡号不匹配</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label class="col-md-1 control-label">支行:</label>
+                                    <div class="col-md-11" ng-class="{'has-error': replaceBankInfo.bankInformation.$error.required && (replaceBankInfo.bankInformation.$dirty || bankInformationChange)}">
+                                        <input type="text" class="form-control inpheight" name="bankInformation" ng-required="true" ng-focus="bankInformationChange=false" ng-model="cloneData.bankInformation">
+                                        <span ng-show=" replaceBankInfo.bankInformation.$error.required && (replaceBankInfo.bankInformation.$dirty || bankInformationChange)" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label  class="col-md-1 control-label">卡号:</label>
+                                    <div class="col-md-11"  ng-class="{'has-error': replaceBankInfo.bankNumber.$error.required && replaceBankInfo.bankNumber.$dirty || bankNumberChange}">
+                                        <input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control inpheight" name="bankNumber" ng-model="cloneData.bankNumber" ng-focus="bankNumberChange=false" ng-required="true">
+                                        <span ng-show="replaceBankInfo.bankNumber.$error.required && replaceBankInfo.bankNumber.$dirty || bankNumberChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                    <div style="margin-left: 90px;color: #a94442" ng-show="bankNumberChange">请输入正确的银行卡号码</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label  class="col-md-1 control-label">预留电话:</label>
+                                    <div class="col-md-11" ng-class="{'has-error': (replaceBankInfo.reservedPhone.$error.required || replaceBankInfo.reservedPhone.$error.pattern)&& (replaceBankInfo.reservedPhone.$dirty || reservedPhoneChange)}">
+                                        <input type="text" class="form-control inpheight" name="reservedPhone" ng-model="cloneData.reservedPhone" ng-required="true" ng-focus="reservedPhoneChange=false" ng-pattern="/^1[3|5|7|8|][0-9]{9}$/">
+                                        <span ng-show="(replaceBankInfo.reservedPhone.$error.required || replaceBankInfo.reservedPhone.$error.pattern)&& (replaceBankInfo.reservedPhone.$dirty || reservedPhoneChange)" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row">
+                                    <label  class="col-xs-1 control-label">银行卡照片:</label>
+                                    <div class="col-xs-9">
+                                        <a ng-init="uploadBankCardPhoto=true" ng-show="uploadBankCardPhoto">查看照片</a>
+                                        <img src="../../resources/img/20151220191157048.gif" width="25" height="25" ng-show="!uploadBankCardPhoto">
+                                    </div>
+                                    <div class="col-xs-2 text-right">
+                                        <button class="btn btn-sm btn-primary" >上传照片</button>
+                                        <input type="file" onchange="angular.element(this).scope().bankCardPhoto_upload(this.files,this)">
+                                    </div>
+                                </div>
+                                <div class="row" id="bankCardPhoto">
+                                    <img data-original="{{cloneData.bankImgUrl}}" alt="银行卡照片" ng-src="{{cloneData.bankImgUrl}}" width="48" height="16" style="position: absolute;left: 83px;top: 0px;opacity:0;cursor: pointer">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bp text-center">
+                            <button type="button" class="btn btn-green" ng-click="confirm()">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="singlePart" >
+    <div id="auditResult" class="row panel-collapse collapse in">
+        <div class="panel-body">
+            <div class="box-body">
+                <form class="form-horizontal  auditOperationForm"  name="auditOperationForm"  role="form"  novalidate>
+                    <div class="row" >
+                        <div class="form-group">
+                            <label  class="col-md-1 control-label" style="text-align: center;">审核结果:</label>
+                            <div class="col-md-3 padmar0"  ng-class="{'has-error': auditOperationForm.auditPicRes.$invalid && (auditOperationForm.auditPicRes.$dirty || submitted)}">
+                                <select class="form-control inpheight selpm" ng-change="getSuggestion(auditPicRes);aaaaa(auditPicRes)" ng-model="auditPicRes" name="auditPicRes" required>
+                                    <option value="">-请选择-</option>
+                                    <option value="{{item.name}}" ng-repeat="item in auditPicResLists">{{item.displayName}}</option>
+                                </select>
+                                <span ng-show="auditOperationForm.auditPicRes.$error.required && (auditOperationForm.auditPicRes.$dirty || submitted)" class="glyphicon glyphicon-remove form-control-feedback help-block"style="right:-7px;top: -10px" ></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group" >
+                            <label  class="col-md-1 control-label" style="text-align: center;">审核备注:</label>
+                            <div class="col-md-3 padmar0">
+                                <textarea rows="5" class="form-control" ng-model="stateRemark"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:30px;">
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-green" ng-click="sureOperation()" ng-disabled="childOperating">&nbsp;&nbsp;确&nbsp;&nbsp;定&nbsp;&nbsp;</button>
+                            <button type="submit" ng-click="back()" class="btn btn-green">&nbsp;&nbsp;返&nbsp;&nbsp;回&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,143 @@
+<!--Created by chigantingting on 2017/11/7.-->
+<div ng-controller="preliminaryListCont">
+    <section class="content-header">
+        <h1>
+            初审列表
+            <small>Preliminary List</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa
+
+ dashboard"></i> 订单管理</a></li>
+            <li class="active">初审列表</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <!-- 内容部分-->
+        <section class="content">
+            <div class="row">
+                <!-- 表格 -->
+                <div class="col-xs-12 padmar0">
+                    <div class="box">
+                        <!-- /.box-header -->
+                        <div class="box-header" style="padding: 20px 12px 2px 12px;">
+                            <!-- 顶部菜单栏 -->
+                            <div class="btn-group conditionItem col-sm-12 padmar0"  style="font-size: 12px;">
+                                <div class="col-xs-3">
+                                    <!--<span class="col-xs-3 padmar0 text-center">所属区域:</span>-->
+                                    <!--<div class="col-xs-6" id="cont1" style="position:relative;">-->
+                                        <!--<input type="text" class="col-xs-12 quxian" id="area-input"  style="background: #fff;" autocomplete="off"-->
+                                               <!--name="department" ng-model="preliminarylist.area"  ng-click="getDept()"  placeholder="-请选择-">-->
+                                        <!--<div id="treeview" style="position: absolute;top:30px;left:0px;z-index:100;width: 100%" ng-show="showAreaTreeview"></div>-->
+                                        <!--<div id="treeview-result" style="position: absolute;top:30px;left:0px;z-index:100;width: 100%;" ng-show="showAreaTreeviewResult">-->
+                                            <!--<ul class="list-group" ng-show="treeviewrResult.length===0">-->
+                                                <!--<li class="list-group-item text-overflow node-treeview" style="width: 100%">无结果</li>-->
+                                            <!--</ul>-->
+                                            <!--<ul class="list-group" ng-show="treeviewrResult.length>0">-->
+                                                <!--<li class="list-group-item text-overflow node-treeview" style="width: 100%" ng-repeat="item in treeviewrResult" ng-bind="item.text" ng-click="selectArea(item.code,item.text)"></li>-->
+                                            <!--</ul>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <span class="col-xs-3 padmar0 text-center">客户姓名:</span>
+                                    <input class="col-xs-5  quxian" type="text" ng-model="preliminarylist.clientName">
+                                    <span class="col-xs-3 padmar0 text-right">客户身份证号:</span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <input class="col-xs-5  quxian" type="text" ng-model="preliminarylist.clientId">
+                                    <span class="col-xs-3 padmar0 text-center">手机号:</span>
+                                    <input class="col-xs-4  quxian" type="text" ng-model="preliminarylist.clientPhone">
+                                </div>
+                                <div class="col-xs-2">
+
+                                    <span class="col-xs-4 padmar0 text-center">订单编号:</span>
+                                    <input class="col-sm-5 quxian" type="text" ng-model="preliminarylist.orderNumber">
+                                </div>
+
+                                <div class="col-xs-1 col-xs-offset-2 ">
+                                    <button class="btn btn-green col-xs-5"
+                                            ng-click="lookup()" style="padding: 6px 0px !important;">查询
+                                    </button>
+                                    <div class="col-xs-2"></div>
+                                    <button class="btn btn-green col-xs-5"
+                                            ng-click="reset()" style="padding: 6px 0px !important;">重置
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body" style="padding: 14px; font-size: 12px;">
+                            <!--表格-->
+                            <div style="overflow-x:scroll;">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">序号</th>
+                                    <th class="text-center">订单编号</th>
+                                    <th class="text-center">订单类型</th>
+                                    <th class="text-center">商品名称</th>
+                                    <th class="text-center">客户姓名</th>
+                                    <th class="text-center">身份证号</th>
+                                    <th class="text-center">手机号</th>
+                                    <th class="text-center">贷款金额</th>
+                                    <th class="text-center">首付金额</th>
+                                    <th class="text-center">期数</th>
+                                    <th class="text-center">月供</th>
+                                    <th class="text-center">利率</th>
+                                    <th class="text-center">所属区域</th>
+                                    <th class="text-center">所属门店</th>
+                                    <th class="text-center">APP来源</th>
+                                    <th class="text-center">业务员工号</th>
+                                    <th class="text-center">业务员名字</th>
+                                    <th class="text-center">业务员手机号</th>
+                                    <th class="text-center">创建时间</th>
+                                    <th class="text-center">订单状态</th>
+                                    <th class="text-center">预审人</th>
+                                    <th class="text-center">预审状态</th>
+                                    <th class="text-center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                <tr  ng-show="none">
+                                    <td colspan="23">暂无数据</td>
+                                </tr>
+                                <tr ng-repeat="item in rowsList"  ng-class="{'highLight':currentIdx === $index}" ng-mouseover="removeHl()">
+                                    <td ng-bind="$index+1"></td>
+                                    <td ng-bind="item.orderCode"></td>
+                                    <td ng-bind="item.orderType"></td>
+                                    <td title="{{item.commodityName }}" ng-bind="item.commodityName |textLengthSet:true:10:'...' "></td>
+                                    <td title="{{item.userName}}" ng-bind="item.userName  |textLengthSet:true:10:'...'"></td>
+                                    <td ng-bind="item.userNationalid"></td>
+                                    <td ng-bind="item.userPhone"></td>
+                                    <td ng-bind="item.loanMoney|currency:'¥'"></td>
+                                    <td ng-bind="item.firstPayMoney|currency:'¥'"></td>
+                                    <td ng-bind="item.payTime"></td>
+                                    <td ng-bind="item.monthMoney|currency:'¥'"></td>
+                                    <td ng-bind="item.payRate"></td>
+                                    <td title="{{item.orgName }}" ng-bind="item.orgName |textLengthSet:true:6:'...'"></td>
+                                    <td title="{{item.storeName}}" ng-bind="item.storeName |textLengthSet:true:6:'...' "></td>
+                                    <td ng-bind="item.appSource.displayName?item.appSource.displayName:'-'"></td>
+                                    <td ng-bind="item.empNameCode?item.empNameCode:'-'"></td>
+                                    <td ng-bind="item.empName?item.empName:'-'"></td>
+                                    <td ng-bind="item.empPhone?item.empPhone:'-'"></td>
+                                    <td title="{{item.insertTime|date:'yyyy-MM-dd hh:mm:ss' }}" ng-bind="item.insertTime|date:'yyyy-MM-dd HH:mm:ss'"></td>
+
+                                    <td ng-bind="item.state.displayName"></td>
+                                    <td ng-bind="item.firstTrialCode?item.firstTrialCode:'-'"></td>
+                                    <td ng-bind="item.firstTrial.displayName"></td>
+                                    <td class="caozuo">
+                                        <span ng-show="item.state.value==13 || item.isChecked==1" style="color: #50AD92;" ng-click="ischeckXinshen(item.bizid,'audit',item.userPhone,item.userCode,item.state,item.orderCode,page,$index,item.userName)"><a>预审</a></span>
+                                        <span ng-click="openNewPage(item.bizid,'view',item.userPhone,item.userCode,item.state,item.orderCode,page,$index,item.isAuth,item.userName)" ><a>查看</a></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                            <!--分页-->
+                            <my-pagination page-option="option" go="go"  alert="myAlert()"></my-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</div>

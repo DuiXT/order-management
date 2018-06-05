@@ -1,0 +1,243 @@
+
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <a data-toggle="collapse" data-parent="#orderDetail" data-target="#preliminaryPhotos">
+                <h4 class="panel-title">
+                    <div class="add_tit">&nbsp;&nbsp;&nbsp;预审照片</div>
+                </h4>
+            </a>
+        </div>
+        <div class="col-lg-2   col-sm-2"></div>
+        <div class="col-md-6 text-right">
+        </div>
+    </div>
+
+    <div id="preliminaryPhotos" class="row panel-collapse collapse in">
+        <div class="panel-body" ng-hide="panel">
+            <div>暂无数据</div>
+        </div>
+        <div class="panel-body" ng-show="panel">
+            <div class="row">
+                <div class="col-md-9 photo-box" id="auditPhotos">
+                    <div class="imgUrl">
+                        <div class="form-group showPhoto " id="dowebok1">
+                            <div class="myCkb" ng-show="rejectPhoto">
+                                <input type="checkbox" id="checkbox_a1"  class="chk_1" url="{{data.identityJ.imgUrl}}" img-type-code="{{data.identityJ.imgTypeCode.name}}" img-sid="{{data.identityJ.imgTypeno}}"/><label for="checkbox_a1"></label>
+                            </div>
+                            <img ng-src="{{data.identityJ.imgUrl?data.identityJ.imgUrl:'../../resources/img/none.png'}}" alt="身份证正面照片" data-original="{{!data.identityJ.imgUrl?'../../resources/img/none.png':identityJOrigion}}">
+                            <img ng-show="false" ng-src="{{data.identityB.imgUrl?data.identityB.imgUrl:'../../resources/img/none.png'}}" alt="身份证反面照片"  data-original="{{!data.identityB.imgUrl?'../../resources/img/none.png':identityBOrigion}}">
+                            <img ng-show="false" ng-src="{{data.holdIdentity.imgUrl?data.holdIdentity.imgUrl:'../../resources/img/none.png'}}"  alt="手持身份证照片"  data-original="{{!data.holdIdentity.imgUrl?'../../resources/img/none.png':holdIdentityOrigion}}">
+                            <img ng-show="false" src="{{data.confim.imgUrl?data.confim.imgUrl:'../../resources/img/none.png'}}" alt="征信照片"  data-original="{{!data.confim.imgUrl?'../../resources/img/none.png':confimOrigion}}">
+                            <img ng-show="false" src="{{data.informCard.imgUrl?data.informCard.imgUrl:'../../resources/img/none.png'}}" alt="手持告知卡照片"  data-original="{{!data.informCard.imgUrl?'../../resources/img/none.png':informOrigion}}">
+                            <img ng-show="false" src="{{data.bankcard.imgUrl?data.bankcard.imgUrl:'../../resources/img/none.png'}}" alt="银行卡照片"  data-original="{{!data.bankcard.imgUrl?'../../resources/img/none.png':bankcardOrigion}}">
+
+                            <!--<button class="btn btn-primary editPic" style="left: 0%;"  ng-init="editPicture=false" ng-show="editPicture">更换照片<input type="file" class="form-control"  img-type-code="{{data.identityJ.type.name}}" img-sid="{{data.identityJ.sid}}" name="img1"   onchange="angular.element(this).scope().mainimg_upload(this.files,this,'singleList')"/></button>-->
+                        </div>
+                        <img class="img_loading quan" src="../../resources/img/20151220191157048.gif" >
+                    </div>
+                    <div class=" ">
+                        <div class="form-group showPhoto"  id="dowebok2">
+                            <div class="myCkb" ng-show="rejectPhoto">
+                                <input type="checkbox" id="checkbox_a2"  class="chk_1" url="{{data.identityB.imgUrl}}" img-type-code="{{data.identityB.imgTypeCode.name}}" img-sid="{{data.identityB.imgTypeno}}" /><label for="checkbox_a2"></label>
+                            </div>
+                            <img ng-show="false" ng-src="{{data.identityJ.imgUrl?data.identityJ.imgUrl:'../../resources/img/none.png'}}" alt="身份证正面照片" data-original="{{!data.identityJ.imgUrl?'../../resources/img/none.png':identityJOrigion}}">
+                            <img ng-src="{{data.identityB.imgUrl?data.identityB.imgUrl:'../../resources/img/none.png'}}" alt="身份证反面照片"  data-original="{{!data.identityB.imgUrl?'../../resources/img/none.png':identityBOrigion}}">
+                            <img ng-show="false" ng-src="{{data.holdIdentity.imgUrl?data.holdIdentity.imgUrl:'../../resources/img/none.png'}}"  alt="手持身份证照片"  data-original="{{!data.holdIdentity.imgUrl?'../../resources/img/none.png':holdIdentityOrigion}}">
+                            <img ng-show="false" src="{{data.confim.imgUrl?data.confim.imgUrl:'../../resources/img/none.png'}}" alt="征信照片"  data-original="{{!data.confim.imgUrl?'../../resources/img/none.png':confimOrigion}}">
+                            <img ng-show="false" src="{{data.informCard.imgUrl?data.informCard.imgUrl:'../../resources/img/none.png'}}" alt="手持告知卡照片"  data-original="{{!data.informCard.imgUrl?'../../resources/img/none.png':informOrigion}}">
+                            <img ng-show="false" src="{{data.bankcard.imgUrl?data.bankcard.imgUrl:'../../resources/img/none.png'}}" alt="银行卡照片"  data-original="{{!data.bankcard.imgUrl?'../../resources/img/none.png':bankcardOrigion}}">
+                            <!--<button class="btn btn-primary editPic" ng-init="editPicture=false" ng-show="editPicture" style="left: 0%;">更换照片-->
+                                <!--<input type="file" class="form-control"  img-type-code="{{data.identityB.type.name}}"  name="img2" img-sid="{{data.identityB.sid}}"  onchange="angular.element(this).scope().mainimg_upload(this.files,this,'singleList')"/>-->
+                            <!--</button>-->
+                        </div>
+                        <img class="img_loading quan" src="../../resources/img/20151220191157048.gif" >
+                    </div>
+                    <div class=" ">
+                        <div class="form-group showPhoto" id="dowebok3">
+                            <div class="myCkb" ng-show="rejectPhoto">
+                                <input type="checkbox" id="checkbox_a3"  class="chk_1"  url="{{data.holdIdentity.imgUrl}}" img-type-code="{{data.holdIdentity.imgTypeCode.name}}" img-sid="{{data.holdIdentity.imgTypeno}}"/><label for="checkbox_a3"></label>
+                            </div>
+                            <img ng-show="false" ng-src="{{data.identityJ.imgUrl?data.identityJ.imgUrl:'../../resources/img/none.png'}}" alt="身份证正面照片" data-original="{{!data.identityJ.imgUrl?'../../resources/img/none.png':identityJOrigion}}">
+                            <img ng-show="false" ng-src="{{data.identityB.imgUrl?data.identityB.imgUrl:'../../resources/img/none.png'}}" alt="身份证反面照片"  data-original="{{!data.identityB.imgUrl?'../../resources/img/none.png':identityBOrigion}}">
+                            <img ng-src="{{data.holdIdentity.imgUrl?data.holdIdentity.imgUrl:'../../resources/img/none.png'}}"  alt="手持身份证照片"  data-original="{{!data.holdIdentity.imgUrl?'../../resources/img/none.png':holdIdentityOrigion}}">
+                            <img ng-show="false" src="{{data.confim.imgUrl?data.confim.imgUrl:'../../resources/img/none.png'}}" alt="征信照片"  data-original="{{!data.confim.imgUrl?'../../resources/img/none.png':confimOrigion}}">
+                            <img ng-show="false" src="{{data.informCard.imgUrl?data.informCard.imgUrl:'../../resources/img/none.png'}}" alt="手持告知卡照片"  data-original="{{!data.informCard.imgUrl?'../../resources/img/none.png':informOrigion}}">
+                            <img ng-show="false" src="{{data.bankcard.imgUrl?data.bankcard.imgUrl:'../../resources/img/none.png'}}" alt="银行卡照片"  data-original="{{!data.bankcard.imgUrl?'../../resources/img/none.png':bankcardOrigion}}">
+                            <!--<button class="btn btn-primary editPic" ng-init="editPicture=false" ng-show="editPicture" style="left: 0%;">更换照片<input type="file" class="form-control"  img-sid="{{data.holdIdentity.sid}}" img-type-code="{{data.holdIdentity.type.name}}"   name="img3"   onchange="angular.element(this).scope().mainimg_upload(this.files,this,'singleList')"/></button>-->
+                        </div>
+                        <img class="img_loading quan" src="../../resources/img/20151220191157048.gif" >
+                    </div>
+                    <div class=" ">
+                        <div class="form-group showPhoto" id="dowebok4">
+                            <div class="myCkb" ng-show="rejectPhoto">
+                                <input type="checkbox" id="checkbox_a4"  class="chk_1" url="{{data.confim.imgUrl}}" img-type-code="{{data.confim.imgTypeCode.name}}"  img-sid="{{data.confim.imgTypeno}}"/><label for="checkbox_a4"></label>
+                            </div>
+                            <img ng-show="false" ng-src="{{data.identityJ.imgUrl?data.identityJ.imgUrl:'../../resources/img/none.png'}}" alt="身份证正面照片" data-original="{{!data.identityJ.imgUrl?'../../resources/img/none.png':identityJOrigion}}">
+                            <img ng-show="false" ng-src="{{data.identityB.imgUrl?data.identityB.imgUrl:'../../resources/img/none.png'}}" alt="身份证反面照片"  data-original="{{!data.identityB.imgUrl?'../../resources/img/none.png':identityBOrigion}}">
+                            <img ng-show="false" ng-src="{{data.holdIdentity.imgUrl?data.holdIdentity.imgUrl:'../../resources/img/none.png'}}"  alt="手持身份证照片"  data-original="{{!data.holdIdentity.imgUrl?'../../resources/img/none.png':holdIdentityOrigion}}">
+                            <img src="{{data.confim.imgUrl?data.confim.imgUrl:'../../resources/img/none.png'}}" alt="征信照片"  data-original="{{!data.confim.imgUrl?'../../resources/img/none.png':confimOrigion}}">
+                            <img ng-show="false" src="{{data.informCard.imgUrl?data.informCard.imgUrl:'../../resources/img/none.png'}}" alt="手持告知卡照片"  data-original="{{!data.informCard.imgUrl?'../../resources/img/none.png':informOrigion}}">
+                            <img ng-show="false" src="{{data.bankcard.imgUrl?data.bankcard.imgUrl:'../../resources/img/none.png'}}" alt="银行卡照片"  data-original="{{!data.bankcard.imgUrl?'../../resources/img/none.png':bankcardOrigion}}">
+                            <!--<button class="btn btn-primary editPic" ng-init="editPicture=false" ng-show="editPicture" style="left: 0%;">更换照片<input type="file"  img-sid="{{data.confim.sid}}" class="form-control"  img-type-code="{{data.confim.type.name}}"   name="img4"   onchange="angular.element(this).scope().mainimg_upload(this.files,this,'singleList')"/></button>-->
+                        </div>
+                        <img class="img_loading quan" src="../../resources/img/20151220191157048.gif" >
+                    </div>
+                    <div class=" ">
+                        <div class="form-group showPhoto" id="dowebok5">
+                            <div class="myCkb" ng-show="rejectPhoto">
+                                <input type="checkbox" id="checkbox_a5"  class="chk_1" url="{{data.informCard.imgUrl}}" img-type-code="{{data.informCard.imgTypeCode.name}}"  img-sid="{{data.informCard.imgTypeno}}"/><label for="checkbox_a5"></label>
+                            </div>
+                            <img ng-show="false" ng-src="{{data.identityJ.imgUrl?data.identityJ.imgUrl:'../../resources/img/none.png'}}" alt="身份证正面照片" data-original="{{!data.identityJ.imgUrl?'../../resources/img/none.png':identityJOrigion}}">
+                            <img ng-show="false" ng-src="{{data.identityB.imgUrl?data.identityB.imgUrl:'../../resources/img/none.png'}}" alt="身份证反面照片"  data-original="{{!data.identityB.imgUrl?'../../resources/img/none.png':identityBOrigion}}">
+                            <img ng-show="false" ng-src="{{data.holdIdentity.imgUrl?data.holdIdentity.imgUrl:'../../resources/img/none.png'}}"  alt="手持身份证照片"  data-original="{{!data.holdIdentity.imgUrl?'../../resources/img/none.png':holdIdentityOrigion}}">
+                            <img ng-show="false" src="{{data.confim.imgUrl?data.confim.imgUrl:'../../resources/img/none.png'}}" alt="征信照片"  data-original="{{!data.confim.imgUrl?'../../resources/img/none.png':confimOrigion}}">
+                            <img  src="{{data.informCard.imgUrl?data.informCard.imgUrl:'../../resources/img/none.png'}}" alt="手持告知卡照片"  data-original="{{!data.informCard.imgUrl?'../../resources/img/none.png':informOrigion}}">
+                            <img ng-show="false" src="{{data.bankcard.imgUrl?data.bankcard.imgUrl:'../../resources/img/none.png'}}" alt="银行卡照片"  data-original="{{!data.bankcard.imgUrl?'../../resources/img/none.png':bankcardOrigion}}">
+                            <!--<button class="btn btn-primary editPic" ng-init="editPicture=false" ng-show="editPicture" style="left: 0%;">更换照片<input type="file"  img-sid="{{data.informCard.sid}}" class="form-control"  img-type-code="{{data.informCard.type.name}}"   name="img5"   onchange="angular.element(this).scope().mainimg_upload(this.files,this,'singleList')"/></button>-->
+                        </div>
+                        <img class="img_loading quan" src="../../resources/img/20151220191157048.gif" >
+                    </div>
+                    <div class=" ">
+                        <div class="form-group showPhoto" id="dowebok6">
+                            <div class="myCkb" ng-show="rejectPhoto">
+                                <input type="checkbox" id="checkbox_a6"  class="chk_1" url="{{data.bankcard.imgUrl}}" img-type-code="{{data.bankcard.imgTypeCode.name}}"  img-sid="{{data.bankcard.imgTypeno}}"/><label for="checkbox_a6"></label>
+                            </div>
+                            <img ng-show="false" ng-src="{{data.identityJ.imgUrl?data.identityJ.imgUrl:'../../resources/img/none.png'}}" alt="身份证正面照片" data-original="{{!data.identityJ.imgUrl?'../../resources/img/none.png':identityJOrigion}}">
+                            <img ng-show="false" ng-src="{{data.identityB.imgUrl?data.identityB.imgUrl:'../../resources/img/none.png'}}" alt="身份证反面照片"  data-original="{{!data.identityB.imgUrl?'../../resources/img/none.png':identityBOrigion}}">
+                            <img ng-show="false" ng-src="{{data.holdIdentity.imgUrl?data.holdIdentity.imgUrl:'../../resources/img/none.png'}}"  alt="手持身份证照片"  data-original="{{!data.holdIdentity.imgUrl?'../../resources/img/none.png':holdIdentityOrigion}}">
+                            <img ng-show="false" src="{{data.confim.imgUrl?data.confim.imgUrl:'../../resources/img/none.png'}}" alt="征信照片"  data-original="{{!data.confim.imgUrl?'../../resources/img/none.png':confimOrigion}}">
+                            <img ng-show="false" src="{{data.informCard.imgUrl?data.informCard.imgUrl:'../../resources/img/none.png'}}" alt="手持告知卡照片"  data-original="{{!data.informCard.imgUrl?'../../resources/img/none.png':informOrigion}}">
+                            <img src="{{data.bankcard.imgUrl?data.bankcard.imgUrl:'../../resources/img/none.png'}}" alt="银行卡照片"  data-original="{{!data.bankcard.imgUrl?'../../resources/img/none.png':bankcardOrigion}}">
+                            <!--<button class="btn btn-primary editPic" ng-init="editPicture=false" ng-show="editPicture" style="left: 0%;">更换照片<input type="file"  img-sid="{{data.bankcard.sid}}" class="form-control"  img-type-code="{{data.bankcard.type.name}}"   name="img5"   onchange="angular.element(this).scope().mainimg_upload(this.files,this,'singleList')"/></button>-->
+                        </div>
+                        <img class="img_loading quan" src="../../resources/img/20151220191157048.gif" >
+                    </div>
+                    <div class=" ">
+                        <div class="form-group showPhoto" >
+                            <div class="form-group showPhoto" id="dowebokOther">
+                                <div id="lalalamove">
+                                    <img ng-if="noElse"  src="../../resources/img/none.png" alt="暂无照片" data-original="../../resources/img/none.png">
+                                </div>
+                            </div>
+                        </div>
+                        <img class="img_loading quan" src="../../resources/img/20151220191157048.gif" >
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-9 photo-box">
+                    <div class=" text-center">
+                        <div class="form-group " >
+                            身份证正面照片
+                        </div>
+                    </div>
+                    <div class="  text-center">
+                        <div class="form-group" >
+                            身份证反面照片
+                        </div>
+                    </div>
+                    <div class="  text-center">
+                        <div class="form-group" >
+                            手持身份证照片
+                        </div>
+                    </div>
+                    <div class="  text-center">
+                        <div class="form-group" >
+                            征信照片
+                        </div>
+                    </div>
+                    <div class="  text-center">
+                        <div class="form-group" >
+                            手持告知卡照片
+                        </div>
+                    </div>
+                    <div class="  text-center">
+                        <div class="form-group" >
+                            银行卡照片
+                        </div>
+                    </div>
+                    <div class="  text-center">
+                        <div class="form-group" >
+                            其他照片(<span ng-bind="othersCount" ></span>)张
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--操作记录弹出窗-->
+    <div class="modal  fade" id="replaceImgOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >更换照片操作记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf" style="max-height: 750px;overflow-y: scroll">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="th">
+                            <th>操作人</th>
+                            <th>时间</th>
+                            <th>操作对象</th>
+                            <th>操作内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="operRecordData">
+                            <td colspan="4" class="text-center">暂时没有操作记录</td>
+                        </tr>
+                        <tr ng-repeat="item in resultList">
+                            <td ng-bind="item.operator"></td>
+                            <td ng-bind="item.operatorTime"></td>
+                            <td ng-bind="item.operatorObject"></td>
+                            <td>将 <a href="{{item.operatorContentSrc}}" target="_blank"><img ng-src="{{item.operatorContentSrc}}" width="20px" height="20px;"></a> 修改为 <a href="{{item.operatorContentDst}}" target="_blank"><img ng-src="{{item.operatorContentDst}}"  width="20px" height="20px;"></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--更换其他照片-->
+    <div class="modal  fade" id="change_others_pic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeAuditPic()">
+                        &times;
+                    </button>
+                    <div class="row _head" >
+                        <div class="col-md-3 " id="myModalLabel" style="font-size: 18px;margin: 10px 10px">更换其他照片</div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="formpadding" name="editGoodsInfo" id="editGoodsInfo">
+                        <div class="row">
+                            <div class="col-md-3 " ng-repeat="item in data.others" style="padding-bottom: 22px;">
+                                <div class="showOtherPhoto">
+                                    <img  ng-src="{{item.imgUrl?item.imgUrl:'../../resources/img/none.png'}}" alt="图片{{$index+1}}" data-original="{{item.imgUrl}}">
+                                    <button class="btn btn-primary editPic">更换照片
+                                        <input type="file" class="form-control"  img-type-number="{{item.sid}}"  img-type-code="{{item.type.name}}"  name="otherImg1"   onchange="angular.element(this).scope().mainimg_upload(this.files,this,'doubleList')"/>
+                                    </button>
+                                    <div class="text-center">
+                                        <span>图片{{$index+1}}</span>
+                                    </div>
+                                </div>
+                                <img class="img_loading" src="../../resources/img/20151220191157048.gif" >
+                            </div>
+                        </div>
+                        <div class="row bp text-center">
+                            <button type="button" class="btn btn-green" ng-click="sureImgs()">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

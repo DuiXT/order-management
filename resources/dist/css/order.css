@@ -1,0 +1,15 @@
+.btn-green{background: #50AD92;color:#fff;}
+thead{text-align: center;}
+.th{background:#EDEDED;color:#373737;height:32px;line-height: 32px;}
+.th th{text-align: center;}
+.modal-title{font-family: "Microsoft YaHei", "微软雅黑", Helvetica, Arial, sans-serif;}
+.formpadding{padding:10px 30px;}
+.inpheight{height:24px;}
+.control-label{font-weight: 300;padding:0;margin:0;}
+.rp{margin-top:10px;}
+.bp{margin-top:20px;}
+.nobor{border:0;background:#fff;}
+.selpm{padding:0;margin:0;}
+.highLight{background: #FAFAFA;}
+.midheight{height: 24px;display: inline-block;line-height: 24px}
+.errorTip{color: #a94442!important;}

@@ -1,0 +1,216 @@
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <a data-toggle="collapse" data-parent="#orderDetail" data-target="#goodsInfo">
+                <h4 class="panel-title">
+                    <div class="add_tit">&nbsp;&nbsp;&nbsp;商品信息</div>
+                </h4>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-md-6 text-right"  ng-show="!btn">
+            <button class="btn btn-green" ng-click="commodityInfoOper()">操作记录</button>
+            <button class="btn btn-green"  ng-show="btn" ng-click="R_modifyProductInfo(data)">修改商品信息</button>
+        </div>
+
+    </div>
+    <div id="goodsInfo" class="row panel-collapse collapse in">
+        <div class="panel-body" ng-hide="panel">
+            <div>暂无数据</div>
+        </div>
+        <div class="panel-body" ng-show="panel">
+            <div class="box-body" style="padding: 14px;">
+                <table id="product" class="table table-bordered table-hover">
+                    <tbody class="text-center">
+                    <tr>
+                        <td><b>商品名称</b></td>
+                        <td ng-bind="data.commodityName?data.commodityName:'-'"></td>
+                        <td><b>商品价格</b></td>
+                        <td ng-bind="data.commodityPrice!==null?data.commodityPrice:'-' | currency:'￥'"></td>
+                        <td><b>首付金额</b></td>
+                        <td ng-bind="data.firstPayMoney!==null?data.firstPayMoney:'-'| currency:'￥'"></td>
+                        <td><b>贷款金额</b></td>
+                        <td ng-bind="data.loanMoney!==null?data.loanMoney:'-'| currency:'￥'"></td>
+                    </tr>
+                    <tr>
+                        <td><b>期数</b></td>
+                        <td ng-bind="data.payTime!==null?data.payTime:'-'"></td>
+                        <td><b>利率</b></td>
+                        <td ng-bind="data.payRate!==null?data.payRate:'-'"></td>
+                        <td><b>每期偿还</b></td>
+                        <td ng-bind="data.monthMyone!==null?data.monthMyone:'-'| currency:'￥'"></td>
+                        <td><b>还款日</b></td>
+                        <td ng-bind="data.payDay?data.payDay:'-'">10日</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--商品信息操作记录弹出窗-->
+    <div class="modal  fade" id="commodityInfoOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >商品信息操作记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf" style="max-height: 750px;overflow-y: scroll">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="th">
+                            <th>操作人</th>
+                            <th>时间</th>
+                            <th>操作对象</th>
+                            <th>操作内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="operRecordData">
+                            <td colspan="4" class="text-center">暂时没有操作记录</td>
+                        </tr>
+                        <tr ng-repeat="item in resultList">
+                            <td>{{item.operator}}</td>
+                            <td>{{item.operatorTime}}</td>
+                            <td>{{item.operatorObject }}</td>
+                            <td title="将[{{item.operatorContentSrc}}]修改为[{{item.operatorContentDst}}]">将[{{item.operatorContentSrc  |textLengthSet:true:18:'...'}}]修改为[{{item.operatorContentDst  |textLengthSet:true:18:'...'}}]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--修改商品信息弹出窗-->
+    <div class="modal  fade" id="R_modifyProductInfo-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="closeModifyGoods()">
+                        &times;
+                    </button>
+                    <div class="row _head" >
+                        <div class="col-md-3 " style="font-size: 18px;margin: 10px 10px">修改商品信息</div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form role="form"  class="formpadding" name="editGoodsInfo" id="editGoodsInfo">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row">
+                                    <label class="col-xs-1 control-label">产品类型:</label>
+                                    <div class="col-xs-2" >
+                                        <select name="proType1" class="form-control"  ng-model="cloneData.level1Code" ng-change="getlevel2Name(cloneData.level1Code)">
+                                            <option value="">-全部-</option>
+                                            <option ng-repeat="x in level1List" value="{{x.name}}">{{x.displayName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <select ng-change="getlevel3Name(cloneData.level1Code,cloneData.level2Code);" name="proType2" class="form-control bgw" ng-disabled="!cloneData.level1Code"  ng-model="cloneData.level2Code">
+                                            <option value="">-全部-</option>
+                                            <option ng-repeat="x in level2List" value="{{x.name}}">{{x.displayName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2" >
+                                        <select ng-change="cloneData.commodityCode='';cloneData.productCode='';getGoodsName(cloneData.level1Code,cloneData.level2Code,cloneData.level3Code);getStagePlan(cloneData.level1Code,cloneData.level2Code,cloneData.level3Code)" ng-model="cloneData.level3Code" ng-disabled="!cloneData.level1Code||!cloneData.level2Code" name="proType3" class="form-control bgw">
+                                            <option value="">-全部-</option>
+                                            <option ng-repeat="x in level3List" value="{{x.name}}">{{x.displayName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label class="col-xs-1 control-label">商品名称:</label>
+                                    <div class="col-xs-11" ng-class="{'has-error': editGoodsInfo.goodsName.$error.required && (editGoodsInfo.goodsName.$dirty||goodsNameChange) }">
+                                        <select name="goodsName" id="goodsName" class="form-control" ng-model="cloneData.commodityCode" ng-required="true" ng-focus="goodsNameChange=false" ng-change="getGoodsPrice()">
+                                            <option value="" data="">-请选择-</option>
+                                            <option ng-repeat="x in goodsNameList" value="{{x.commodityCode}}"  data="{{x}}">{{x.commodityName}}</option>
+                                        </select>
+                                        <span ng-show="editGoodsInfo.goodsName.$error.required && (editGoodsInfo.goodsName.$dirty||goodsNameChange)" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label class="col-xs-1 control-label">商品价格:</label>
+                                    <div class="col-xs-11"  ng-class="{'has-error': editGoodsInfo.goodsPrice.$error.required && editGoodsInfo.goodsPrice.$dirty||goodsPriceChange}">
+                                        <input type="text" name="goodsPrice" ng-required="true" class="form-control inpheight" style="line-height: 12px" ng-model="cloneData.commodityPrice" ng-change="judgeGoodsPrice()">
+                                        <span ng-show="editGoodsInfo.goodsPrice.$error.required && editGoodsInfo.goodsPrice.$dirty||goodsPriceChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label class="col-xs-1 control-label">首付金额:</label>
+                                    <div class="col-xs-11" ng-class="{'has-error': editGoodsInfo.goodsPrice.$error.required && editGoodsInfo.goodsPrice.$dirty||goodsFirstChange}">
+                                        <input type="text" ng-required="true" ng-change="judgeGoodsFirstPay()" class="form-control inpheight" name="productFirstPay" ng-model="cloneData.firstPayMoney">
+                                        <span ng-show="editGoodsInfo.goodsPrice.$error.required && editGoodsInfo.goodsPrice.$dirty||goodsFirstChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row">
+                                    <label  class="col-xs-1 control-label">贷款金额:</label>
+                                    <div class="col-xs-11 ">
+                                        <span ng-bind="cloneData.commodityPrice-cloneData.firstPayMoney|currency:'￥'"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span ng-show="loanRange" ng-init="loanRange=false" style="color: #a94442">请注意贷款金额应在<span ng-bind="loanAmountMin|currency:'￥'"></span>~<span ng-bind="loanAmountMax|currency:'￥'"></span>范围内!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label class="col-xs-1 control-label">分期方案:</label>
+                                    <div class="col-xs-11" ng-class="{'has-error': editGoodsInfo.interestType.$error.required && (editGoodsInfo.interestType.$dirty || interestTypeChange)}">
+                                        <select id="interestType" name="interestType" class="form-control" ng-focus="interestTypeChange=false"  ng-model="cloneData.productCode" ng-change="cloneData.payTime='';getSupportTimes(cloneData.productCode);getMonthPay(cloneData.commodityPrice-cloneData.firstPayMoney,cloneData.payTime,cloneData.productCode)" ng-required="true">
+                                            <option value="">-请选择-</option>
+                                            <option ng-repeat="x in stagingPlanList" value="{{x.productCode}}" data="{{x}}">{{x.productName}}</option>
+                                        </select>
+                                        <span ng-show="editGoodsInfo.interestType.$error.required && (editGoodsInfo.interestType.$dirty || interestTypeChange)" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group row has-feedback">
+                                    <label class="col-xs-1 control-label">期数:</label>
+                                    <div class="col-xs-11"  ng-class="{'has-error': editGoodsInfo.payTime.$error.required && (editGoodsInfo.payTime.$dirty || payTimeChange)}">
+                                        <select id="payTime" name="payTime" class="form-control bgw" ng-focus="payTimeChange=false" ng-disabled="!cloneData.productCode"  ng-model="cloneData.payTime" ng-change="getMonthPay(cloneData.commodityPrice-cloneData.firstPayMoney,cloneData.payTime,cloneData.productCode)"  ng-required="true">
+                                            <option value="">-请选择-</option>
+                                            <option ng-repeat="x in supportTimesList" value="{{x.payTime}}" data="{{x}}">{{x.payTime}}{{x.paytimeUnit.displayName}}</option>
+                                        </select>
+                                        <span ng-show="editGoodsInfo.payTime.$error.required &&  (editGoodsInfo.payTime.$dirty || payTimeChange)" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label  class="col-xs-1 control-label">每月应还:</label>
+                                <div class="col-xs-11">
+                                    <span ng-bind="cloneData.monthMyone | currency:'￥'"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bp text-center">
+                            <button type="button" class="btn btn-green" ng-click="confirm()">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

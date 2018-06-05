@@ -1,0 +1,26 @@
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <a data-toggle="collapse" data-parent="#orderDetail" data-target="#contractInfo">
+                <h4 class="panel-title">
+                    <div class="add_tit">&nbsp;&nbsp;&nbsp;合同信息</div>
+                </h4>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-md-6 text-right">
+        </div>
+    </div>
+    <div id="contractInfo" class="row panel-collapse collapse in">
+        <div class="panel-body" ng-hide="panel">
+            <div>暂无数据</div>
+        </div>
+        <div class="panel-body" ng-show="panel">
+            <div class="row">
+                <div class="col-md-12">
+                    <div><label ng-repeat="item in data"><a href="{{item.url===null?'javascript:;':item.url}}" ng-class="{'normalFonts':item.url===null}"><span ng-if="item.url!==null">《</span>{{item.name}}<span ng-if="item.url!==null">》</span></a><span ng-if="$index<data.length-1">、</span></label></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

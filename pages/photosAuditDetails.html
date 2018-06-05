@@ -1,0 +1,42 @@
+<!--Created by chigantingting on 2017/11/8.-->
+<div ng-controller="photosAuditDetailCont">
+    <section class="content-header">
+        <h1>
+            提货照片审核详情-<small style="color: black" ng-bind="subTitle"></small>
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a ui-sref="orderList"><i class="fa fa-dashboard"></i> 订单管理</a></li>
+            <li class="active"><a ui-sref="photosAuditList">提货照片审核列表</a></li>
+            <li class="active"><a ui-sref="photosAuditDetails">提货照片审核详情</a></li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid rowline" id="auditPictureDetail">
+        <!-- 内容部分-->
+        <!--商品信息-->
+        <div goods-info data="goodsInfo" btn="editGoodsBtn" parent-bizid="{{pBizid}}" user-info="{{userInfo}}" get-data="getData()"></div>
+        <!--绑卡信息-->
+        <div bind-card-info bindcard-btns="bindcardBtn" type="{{type}}" data="bindCard" btn="viewBtn" user-info="{{userInfo}}" get-data="getData()"></div>
+        <!--提货照片-->
+        <div goods-photos reject-photo="rejectPhoto" btn="viewBtn" user-info="{{userInfo}}" data="goodsPhoto" list-img="modifyListImgArr" reject-list-img="rejectListImgArr"></div>
+        <!--提货照片审核-->
+        <div audit-picture ng-show="viewBtn" child-operating="operating" show-cbxx="showCbx(name)" audit-pic-confirms="auditConfirm(obj)" user-info="{{userInfo}}" go-back="back()"></div>
+        <!--返回列表-->
+        <div back-list ng-show="!viewBtn" go-back="back()"></div>
+    </section>
+    <!-- alert弹窗 -->
+    <div class="mask" id="mask"></div>
+    <div class="dialog" id="alertlog" style="height: 160px;">
+        <div class="dialog-title"> </div>
+        <div class="dialog-content"></div>
+        <div class="dialog-hint" style="text-indent: 0; text-align: center;">{{alertlog}}</div>
+        <div class="row" style="width: auto;">
+            <div class="col-md-4 col-lg-4 col-sm-4"></div>
+            <div class="col-md-4 col-lg-4 col-sm-4">
+                <button class="btn btn-default searching col-md-3  col-lg-3 col-sm-3" style="height:35px;width: 100%;" ng-click="hideAlert()">确定</button>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div ng-controller="preliminaryDetailCont">
+    <section class="content-header">
+        <h1>
+            初审详情-<small style="color: black" ng-bind="subTitle"></small>
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 订单管理</a></li>
+            <li class="active"><a ui-sref="preliminaryList">初审列表</a></li>
+            <li class="active">初审详情</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid rowline" id="auditDetail">
+        <!-- 内容部分-->
+        <!--客户信息-->
+        <div custom-info  data="custominfo" custom-sures="Company()" btn="viewBtn" btn-pre="previewbtn" parent-bizid="{{pBizid}}"   user-info="{{userInfo}}"  custom-sures="Company()"  type="{{listType}}"></div>
+        <!--绑卡信息-->
+        <div bind-card-info data="bindCard"  user-info="{{userInfo}}" ></div>
+        <!--预审照片-->
+        <div preliminary-photos data="imageInfo" bindcard-btns="bindcardBtn" reject-photo="rejectPhoto"></div>
+        <!--信审结果-->
+        <div preliminary-operation  child-operating="operating"  reject-photo="rejectPhoto" ng-show="viewBtn"  go-back="back()"   sure-operations="sureOperationsList(obj)"></div>
+        <!--返回列表-->
+        <div back-list ng-show="!viewBtn" go-back="back()"></div>
+    </section>
+</div>

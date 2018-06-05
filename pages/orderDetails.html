@@ -1,0 +1,46 @@
+<div ng-controller="orderDetailCont">
+    <section class="content-header">
+        <h1>
+            订单详情-<small ng-bind="subTitle">{{subTitle}}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 订单管理</a></li>
+            <li class="active"><a ui-sref="orderList">订单列表</a></li>
+            <li class="active">订单详情</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid rowline" id="orderDetail">
+        <!-- 内容部分-->
+        <!--客户信息-->
+        <div custom-info btn="viewBtn"   data="orderDetail" user-info="{{userInfo}}"></div>
+        <!--信审照片-->
+        <div audit-photos btn="viewBtn" data="auditphotosDetail" user-info="{{userInfo}}"  ></div>
+        <!--单位信息-->
+        <div company-info btn="viewBtn"  data="companyDetail" user-info="{{userInfo}}"></div>
+        <!--商品信息-->
+        <div goods-info btn="viewBtn" data="goodsDetail" user-info="{{userInfo}}"></div>
+        <!--风控信息-->
+        <div ng-show="riskPanel"  risk-info  list-type="{{listType}}"   user-info="{{userInfo}}" is-auth="{{isAuth}}"></div>
+        <!--抽查联系人-->
+        <div tel-resch  data="telreschDetail" btn="viewBtn" user-info="{{userInfo}}"></div>
+        <!--备注信息-->
+        <div remark-info ng-show="riskPanel" data="remarkInfoDetail"></div>
+        <!--绑卡信息-->
+        <div bind-card-info  data="bindcardDetail" btn="viewBtn" user-info="{{userInfo}}"></div>
+        <!--合同信息-->
+        <div contract-info  data="contractDetail"></div>
+        <!--还款信息-->
+        <div repayment-info  data="repayDetail" btn="viewBtn" user-info="{{userInfo}}"></div>
+        <!--提货照片-->
+        <div goods-photos  data="goodsphotosDetail" btn="viewBtn" user-info="{{userInfo}}"></div>
+        <!--信审结果-->
+        <div audit-res  data="creditResult" user-info="{{userInfo}}"></div>
+        <!--提货照片审核结果-->
+        <div goods-photos-audit  data="goodsPhotosAuditResult"  user-info="{{userInfo}}"></div>
+        <!--打款结果-->
+        <div remit-res  data="remitRes" user-info="{{userInfo}}"></div>
+        <!--返回列表-->
+        <div back-list  go-back="back()"></div>
+    </section>
+</div>

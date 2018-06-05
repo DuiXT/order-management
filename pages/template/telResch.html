@@ -1,0 +1,164 @@
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <a data-toggle="collapse" data-parent="#orderDetail" data-target="#telResch">
+                <h4 class="panel-title">
+                    <div class="add_tit">&nbsp;&nbsp;&nbsp;抽查联系人</div>
+                </h4>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-md-6 text-right" >
+            <button class="btn btn-green"  ng-click="phoneVerifyInfoOper()">电核记录</button>
+            <button class="btn btn-green" ng-show="btn" ng-click="getNextInfo()">换一组</button>
+        </div>
+    </div>
+    <div id="telResch" class="row panel-collapse collapse in">
+        <div class="panel-body" ng-hide="panel">
+            <div>暂无数据</div>
+        </div>
+        <div class="panel-body" ng-show="panel">
+            <div class="box-body" style="padding: 14px;">
+                <table id="telResearch" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-center">姓名</th>
+                        <th class="text-center">关系</th>
+                        <th class="text-center">通话次数</th>
+                        <th class="text-center">手机号</th>
+                        <th class="text-center">电核结果</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    <tr ng-repeat="item in data">
+                        <td ng-bind="item.linkerName?item.linkerName:'-'"></td>
+                        <td ng-bind="item.linkRelation.displayName?item.linkRelation.displayName:'-'"></td>
+                        <td ng-bind="item.callFrequency||item.callFrequency===0?item.callFrequency:'-'"></td>
+                        <td ng-bind="item.linkPhone?item.linkPhone:'-'"></td>
+                        <td  ng-class="{'caozuo':item.phoneReviewResult||!btn}"><a ng-class="{'btn btn-green btn-sm':!item.phoneReviewResult&&btn}" ng-click="R_phoneVerifyOper($index,$event)">{{item.phoneReviewResult.displayName?item.phoneReviewResult.displayName:'待电核'}}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--电核记录-->
+    <div class="modal  fade" id="phoneVerifyInfoOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >电核记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf" style="max-height: 750px;overflow-y: scroll">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="th">
+                            <th>审核人</th>
+                            <th>时间</th>
+                            <th>联系人姓名</th>
+                            <th>联系人关系</th>
+                            <th>联系人电话</th>
+                            <th>审核结果</th>
+                            <th>审核意见</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="operRecordData">
+                            <td colspan="8" class="text-center">暂时没有操作记录</td>
+                        </tr>
+                        <tr ng-repeat="item in resultList">
+                            <td>{{item.checker}}</td>
+                            <td>{{item.checkTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td title="{{item.contactor}}">{{item.contactor |textLengthSet:true:10:'...'}}</td>
+                            <td>{{item.contactRelate.displayName}}</td>
+                            <td>{{item.contactPhone}}</td>
+                            <td title="{{item.checkResult.displayName}}">{{item.checkResult.displayName |textLengthSet:true:10:'...'}}</td>
+                            <td title="{{item.checkAdvice.displayName}}">{{item.checkAdvice.displayName |textLengthSet:true:10:'...'}}</td>
+                            <td title="{{item.remark}}">{{item.remark |textLengthSet:true:10:'...'}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--电核弹出窗-->
+    <div class="modal  fade" id="R_phoneVerifyOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <div class="row _head" >
+                        <div class="col-md-3 " style="font-size: 18px;margin: 10px 10px">电核</div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="formpadding" name="telResearch">
+                        <div class="row">
+                            <div class="form-group has-feedback">
+                                <label  class="col-xs-1 control-label">联系人姓名:</label>
+                                <div class="col-xs-11" ng-class="{'has-error': telResearch.linkerName.$error.required && telResearch.linkerName.$dirty || linkerNameChange}">
+                                    <input type="text" class="form-control inpheight bgw" name="linkerName"  ng-model="cloneData.linkerName" ng-required="true" ng-disabled="!btn" ng-focus="linkerNameChange=false">
+                                    <span ng-show="telResearch.linkerName.$error.required && telResearch.linkerName.$dirty || linkerNameChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-xs-1 control-label">联系人关系:</label>
+                                <div class="col-xs-11"  ng-class="{'has-error': telResearch.linkerRelation.$error.required && telResearch.linkerRelation.$dirty || linkerRelationChange}">
+                                    <select class="form-control inpheight selpm bgw" name="linkerRelation" ng-required="true" ng-disabled="!btn" ng-model="cloneData.linkRelation.name" ng-focus="linkerRelationChange=false">
+                                        <option value="">-请选择-</option>
+                                        <option value="{{item.name}}" ng-repeat="item in relationList">{{item.displayName}}</option>
+                                    </select>
+                                    <span ng-show="telResearch.linkerRelation.$error.required && telResearch.linkerRelation.$dirty || linkerRelationChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-xs-1 control-label">审核结果:</label>
+                                <div class="col-xs-11"  ng-class="{'has-error': telResearch.telRes.$error.required && telResearch.telRes.$dirty || telResChange}">
+                                    <select class="form-control inpheight selpm bgw" name="telRes" ng-model="cloneData.phoneReviewResult.name" ng-focus="telResChange=false" ng-disabled="!btn" ng-change="getTelAdvice(cloneData.phoneReviewResult.name)" ng-required="true">
+                                        <option value="">-请选择-</option>
+                                        <option value="{{item.name}}" ng-repeat="item in telResList">{{item.displayName}}</option>
+                                    </select>
+                                    <span ng-show="telResearch.telRes.$error.required && telResearch.telRes.$dirty || telResChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-xs-1 control-label">审核意见:</label>
+                                <div class="col-xs-11" ng-class="{'has-error': telResearch.telAdvice.$error.required && telResearch.telAdvice.$dirty || telAdviceChange}">
+                                    <select class="form-control inpheight selpm bgw" name="telAdvice" ng-disabled="!cloneData.phoneReviewResult.name || !btn" ng-focus="telAdviceChange=false" ng-model="cloneData.phoneReviewAdvice.name" ng-required="true">
+                                        <option value="">-请选择-</option>
+                                        <option value="{{item.name}}" ng-repeat="item in telAdvList">{{item.displayName}}</option>
+                                    </select>
+                                    <span ng-show="telResearch.telAdvice.$error.required && telResearch.telAdvice.$dirty || telAdviceChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 8px;top: -5px" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-xs-1 control-label">备注:</label>
+                                <div class="col-xs-11">
+                                    <textarea rows="3" class="bgw" style="width:100%;" ng-disabled="!btn" ng-model="cloneData.remark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bp text-center" ng-show="btn">
+                            <button type="button" class="btn btn-green" ng-click="confirm()">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

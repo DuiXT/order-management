@@ -1,0 +1,85 @@
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <a data-toggle="collapse" data-parent="#orderDetail" data-target="#remitRes">
+                <h4 class="panel-title">
+                    <div class="add_tit">&nbsp;&nbsp;&nbsp;打款结果</div>
+                </h4>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-md-6 text-right" >
+            <button class="btn btn-green" ng-click="A_repaymentOper()">操作记录</button>
+        </div>
+    </div>
+    <div id="remitRes" class="row panel-collapse collapse in">
+        <div class="panel-body" ng-hide="panel">
+            <div>暂无数据</div>
+        </div>
+        <div class="panel-body" ng-show="panel">
+            <div class="row col-md-12">
+                <div class="col-md-2"> <div class="form-group  " >
+                    <label  class=" control-label padmar0" style="text-align:left;">打款结果： <label class="control-label auditRes" ng-bind="data.auditResult?data.auditResult:'-'"></label></label>
+                </div></div>
+                <div class="col-md-3">
+                    <div class="form-group  " >
+                        <label  class=" control-label padmar0" style="text-align:left;">打款意见： <label class="control-label auditRes" ng-bind="data.auditProposal?data.auditProposal:'-'"></label></label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group  " >
+                        <label  class=" control-label padmar0" style="text-align:left;">打款人员： <label class="control-label auditRes" ng-bind="data.operatorName?data.operatorName:'-'"></label></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group  " >
+                        <label  class=" control-label padmar0" style="text-align:left;">打款时间： <label class="control-label auditRes" ng-bind="data.auditEndTime ?data.auditEndTime :'-'"></label></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-8">
+                <div class="col-md-12" >
+                    <div class=" form-group">
+                        <label  class="control-label" style="text-align:left;">打款备注： <label class="control-label auditRes" ng-bind="data.stateRemark?data.stateRemark:'-'"></label></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--打款操作记录-->
+    <div class="modal  fade" id="A_repaymentOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >打款操作记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf" style="max-height: 750px;overflow-y: scroll">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="th">
+                            <th>操作人</th>
+                            <th>时间</th>
+                            <th>操作对象</th>
+                            <th>操作内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="operRecordData">
+                            <td colspan="4" class="text-center">暂时没有操作记录</td>
+                        </tr>
+                        <tr ng-repeat="item in resultList">
+                            <td>{{item.operator}}</td>
+                            <td>{{item.operatorTime}}</td>
+                            <td>{{item.operatorObject }}</td>
+                            <td>{{item.operatorContent }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

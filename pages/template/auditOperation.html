@@ -1,0 +1,98 @@
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+        <a data-toggle="collapse" data-parent="#auditDetail" data-target="#auditResult">
+            <h4 class="panel-title">
+                <div class=" add_tit">&nbsp;&nbsp;&nbsp;信审结果</div>
+            </h4>
+        </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-md-6 text-right">
+            <button class="btn btn-green" ng-click="infoReviewOper()">操作记录</button>
+        </div>
+    </div>
+    <div id="auditResult" class="row panel-collapse collapse in">
+        <div class="panel-body">
+            <div class="box-body">
+                <form class="form-horizontal  auditOperationForm"  name="auditOperationForm"  role="form"  novalidate>
+                    <div class="row" >
+                        <div class="form-group">
+                            <label  class="col-md-1 control-label" style="text-align: center;">信审结果:</label>
+                            <div class="col-md-3 padmar0"  ng-class="{'has-error': auditOperationForm.auditPicRes.$invalid && (auditOperationForm.auditPicRes.$dirty || submitted)}">
+                                <select class="form-control inpheight selpm" ng-change="getSuggestion(auditPicRes);aaaaa(auditPicRes)" ng-model="auditPicRes" name="auditPicRes" required>
+                                    <option value="">-请选择-</option>
+                                    <option value="{{item.name}}" ng-repeat="item in auditPicResLists">{{item.displayName}}</option>
+                                </select>
+                                <span ng-show="auditOperationForm.auditPicRes.$error.required && (auditOperationForm.auditPicRes.$dirty || submitted)" class="glyphicon glyphicon-remove form-control-feedback help-block"style="right:-7px;top: -10px" ></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group" >
+                            <label  class="col-md-1 control-label" style="text-align: center;">信审意见:</label>
+                            <div class="col-md-3 padmar0"  ng-class="{'has-error': auditOperationForm.auditSuggestionssst.$invalid && (auditOperationForm.auditSuggestionssst.$dirty || submitted)}">
+                                <select class="form-control inpheight selpm" ng-model="auditSuggestionssst" name="auditSuggestionssst" required>
+                                    <option value="">-请选择-</option>
+                                    <option value="{{item.name}}" ng-repeat="item in auditResList">{{item.displayName}}</option>
+                                </select>
+                                <span ng-show="auditOperationForm.auditSuggestionssst.$error.required && (auditOperationForm.auditSuggestionssst.$dirty || submitted)" class="glyphicon glyphicon-remove form-control-feedback help-block" style="right:-7px;top: -10px" ></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group" >
+                            <label  class="col-md-1 control-label" style="text-align: center;">信审备注:</label>
+                            <div class="col-md-3 padmar0">
+                                <textarea rows="5" class="form-control" ng-model="stateRemark"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:30px;">
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-green" ng-click="sureOperation()" ng-disabled="childOperating">&nbsp;&nbsp;确&nbsp;&nbsp;定&nbsp;&nbsp;</button>
+                            <button type="submit" ng-click="back()" class="btn btn-green">&nbsp;&nbsp;返&nbsp;&nbsp;回&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--信审操作记录-->
+    <div class="modal  fade" id="infoReviewOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >信审操作记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf" style="max-height: 750px;overflow-y: scroll">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="th">
+                            <th>操作人</th>
+                            <th>时间</th>
+                            <th>操作对象</th>
+                            <th>操作内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="operRecordData">
+                            <td colspan="4" class="text-center">暂时没有操作记录</td>
+                        </tr>
+                        <tr ng-repeat="item in resultList">
+                            <td>{{item.operator}}</td>
+                            <td>{{item.operatorTime}}</td>
+                            <td>{{item.operatorObject}}</td>
+                            <td>{{item.operatorContent}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

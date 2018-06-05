@@ -1,0 +1,500 @@
+<div class="singlePart" >
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+        <a data-toggle="collapse" data-parent="#orderDetail" data-target="#repaymentInfo">
+            <h4 class="panel-title">
+                <div class="add_tit">&nbsp;&nbsp;&nbsp;还款信息</div>
+            </h4>
+        </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-md-6 text-right">
+            <!--<button class="btn btn-green" ng-click="cancelRepayFn(data)" ng-show="btn">取消还款</button>-->
+            <button class="btn btn-green" ng-click="A_selfRepayInfoOper(0)">操作记录</button>
+            <button class="btn btn-green" ng-click="A_lineOffOper()" ng-show="btn&&rpbtn">线下结清
+            </button>
+            <button class="btn btn-green" ng-click="A_onlineOffOper()" ng-show="btn">线上结清</button>
+        </div>
+    </div>
+    <div id="repaymentInfo" class="row panel-collapse collapse in">
+        <div class="panel-body" ng-hide="panel">
+            <div>暂无数据</div>
+        </div>
+        <div class="panel-body" ng-show="panel">
+            <div class="box-body" style="padding: 14px;">
+                <table id="repaymentInofo" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-center">还款期数</th>
+                        <th class="text-center">还款金额</th>
+                        <th class="text-center">本金</th>
+                        <th class="text-center">利息</th>
+                        <th class="text-center">其他费用</th>
+                        <th class="text-center">滞纳金</th>
+                        <th class="text-center">应还总额</th>
+                        <th class="text-center">剩余本金</th>
+                        <th class="text-center">预计还款日期</th>
+                        <th class="text-center">实际还款日期</th>
+                        <th class="text-center">还款方式</th>
+                        <th class="text-center">状态</th>
+                        <th ng-show="due" class="text-center">逾期状态</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    <tr ng-repeat="item in data">
+                        <td ng-bind="item.payTime?item.payTime:'--'"></td>
+                        <td ng-bind="item.totalAmount?item.totalAmount:'0'|currency:'￥'"></td>
+                        <td ng-bind="item.capitalAmount?item.capitalAmount:'0'|currency:'￥'"></td>
+                        <td ng-bind="item.interesAmount?item.interesAmount:'0'|currency:'￥'"></td>
+                        <td ng-bind="item.otheAmount?item.otheAmount:'0'|currency:'￥'"></td>
+                        <td ng-bind="item.overduefineAmount?item.overduefineAmount:'0'|currency:'￥'"></td>
+                        <td ng-bind="item.shouldTotalAmount?item.shouldTotalAmount:'0'|currency:'￥'"></td>
+                        <td ng-bind="item.surplusCapital?item.surplusCapital:'-'|currency:'￥'"></td>
+                        <td ng-bind="item.expectedRepayDate?item.expectedRepayDate:'--'|date:'yyyy-MM-dd'"></td>
+                        <td ng-bind="item.realRepayTime?item.realRepayTime:'--'|date:'yyyy-MM-dd'"></td>
+                        <td ng-bind="item.payType.displayName?item.payType.displayName:'--'"></td>
+                        <td ng-bind="item.payState.displayName?item.payState.displayName:'--'"></td>
+                        <td ng-show="due" ng-bind="item.overduefineDay?item.overduefineDay:'--'"></td>
+                        <td class="operate">
+                            <span ng-if="item.payState.name==='SUCCESSFUL'" ng-click="A_selfRepayInfoOper(item.payTime)">还款记录</span>
+                            <!--<span ng-if="item.payState.name==='SUCCESSFUL'" ng-click="withholdRecord(item.payTime)">代扣记录</span>-->
+                            <span  ng-if="(item.payState.name==='WAITING'||item.payState.name==='DUE_TO')&&btn" ng-click="InitiateDeduction(item.payTime)">发起代扣</span>
+                            <span  ng-if="(item.payState.name==='WAITING'||item.payState.name==='DUE_TO')&&btn"  ng-click="repayOffline(item.payTime)">线下还款</span>
+                            <span  ng-if="item.payType.name==null&&!btn">--</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--还款信息操作记录-->
+    <div class="modal  fade" id="repaymentInfoOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >还款信息操作记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf" style="max-height: 750px;overflow-y: scroll">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr class="th">
+                                <th>操作人</th>
+                                <th>操作时间</th>
+                                <th>操作对象</th>
+                                <th>操作内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="operRecordDatas">
+                                <td colspan="4" class="text-center">暂时没有操作记录</td>
+                            </tr>
+                            <tr  ng-if="!operRecordDatas" ng-repeat="item in resultList">
+                                <td ng-bind="item.operator?item.operator:'--'"></td>
+                                <td ng-bind="item.operatorTime?item.operatorTime:'--'|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td ng-bind="item.operatorObject?item.operatorObject:'--'"></td>
+                                <td ng-bind="item.operatorContent?item.operatorContent:'--'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--线下一次结清弹出窗-->
+    <div class="modal  fade" id="A_lineOffOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title">线下一次结清</h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="formpadding" name="offlinePay">
+                        <div class="row rp">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">实际转账日期:</label>
+                                <div class="col-sm-3" ng-class="{'has-error': errDate}">
+                                    <input type="text" ng-readonly="true" id="actualTransDate" bs-Datepicker  data-date-format="yyyy-mm-dd" class="form-control bgw inpheight" name="time" ng-model="actualTransDate" ng-blur="getDate()" ng-change="judgeDate()">
+                                    <span ng-show="errDate" class="glyphicon glyphicon-remove form-control-feedback help-block"style="right:10px;top: -10px" ></span>
+                                </div>
+                                <div class="col-sm-6 midheight" ng-if="errDate">
+                                    <span  class="errorTip">实际转账日期应在当前日期之前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-2 control-label midheight">减免金额:</label>
+                                <div class="col-sm-3"  ng-class="{'has-error': offCutPriceChange}" ng-init="offCutPriceChange=false">
+                                    <input type="text" class="form-control inpheight" ng-required="true" name="reliefAmount" ng-blur="judgeGoodsPrice()"  ng-model="offCutPrice">
+                                    <span ng-show="offCutPriceChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px" ></span>
+                                </div>
+                                <div class="col-sm-6 midheight" ng-if="errOffCutPrice">
+                                    <span  class="errorTip">减免金额不能大于实际应还总额减去本金总额</span>
+                                </div>
+                                <div class="col-sm-6 midheight" ng-if="emptyOffCutPrice && offlinePay.reliefAmount.$error.required">
+                                    <span  class="errorTip">减免金额不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">还款公式:</label>
+                                <div class="col-sm-10">
+                                    <span class="midheight">截止当日未还月供总和(包括当月月供)<span ng-bind="monthPay===null?'--':monthPay"></span>元+剩余本金<span ng-bind="surplusCapital===null?'--':surplusCapital"></span>元+逾期费<span ng-bind="overdueMoney===null?'--':overdueMoney"></span>元+违约金<span ng-bind="breakContractMoney===null?'--':breakContractMoney"></span>元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">预计结清金额:</label>
+                                <div class="col-sm-10">
+                                    <span class="midheight" style="color: red" ng-bind="expectedMoney===null?0:expectedMoney|currency:'￥'" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class=" col-sm-2 control-label midheight">实际结清金额:</label>
+                                <div class="col-sm-10">
+                                    <span class="midheight" ng-bind="expectedMoney-offCutPrice|currency:'￥'" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">转账凭证:</label>
+                                <div class="col-sm-10">
+                                    <div class="col-xs-10" style="padding: 0">
+                                        <div class="col-md-2"  style="margin-bottom: 10px;height: 50px;padding: 0" ng-repeat="item in translist">
+                                            <img class="elsePic" ng-src="{{item}}" >
+                                            <span  ng-click="delElsePic($index)" class="delElsePic">X</span>
+                                        </div>
+                                        <div class="col-md-2"  style="margin-bottom: 10px;height: 50px;padding: 0" ng-init="uploading=false" ng-if="uploading">
+                                            <img class="elsePic" src="../../resources/img/20151220191157048.gif" >
+                                        </div>
+                                        <div class="col-md-2"  style="margin-bottom: 10px;padding: 0;line-height:30px;color: #a94442" ng-init="translistNone=false" ng-if="translistNone&&translist.length==0">
+                                            请上传转账凭证
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2 text-right" style="padding-right: 0px">
+                                        <button class="btn btn-sm btn-primary" >上传照片</button>
+                                        <input type="file" style="width: 70px;height: 30px;position: absolute;left: 40px" onchange="angular.element(this).scope().transVoucher_upload(this.files,event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-2 control-label midheight">备注信息:</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="3"  name="markInfo" ng-model="offMarkInfo" ng-class="{'markInfo-error': offMarkInfoChange&&offMarkInfo==''}" style="width:100%;max-width: 653.33px" ng-focus="offMarkInfoChange=false"></textarea>
+                                    <span ng-show="offMarkInfoChange&&offMarkInfo==''" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px;border-radius: 5px;color:#a94442 " ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bp text-center">
+                            <button type="button" class="btn btn-green" ng-click="offlineConfirm()">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--线上一次结清弹出窗-->
+    <div class="modal  fade" id="A_onlineOffOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title">线上一次结清</h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="formpadding" name="onlinePay">
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-2 control-label midheight">减免金额:</label>
+                                <div class="col-sm-3"  ng-class="{'has-error': onCutPriceChange}" ng-init="onCutPriceChange=false">
+                                    <input type="text" class="form-control inpheight" name="reliefAmount" ng-required="true" ng-model="onCutPrice" ng-blur="judgeGoodsPrice_online()">
+                                    <span ng-show="onCutPriceChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px" ></span>
+                                </div>
+                                <div class="col-sm-6 midheight" ng-if="errOnCutPrice">
+                                    <span  class="errorTip">减免金额不能大于实际应还总额减去本金总额</span>
+                                </div>
+                                <div class="col-sm-6 midheight" ng-if="emptyOnCutPrice && onlinePay.reliefAmount.$error.required">
+                                    <span  class="errorTip">减免金额不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">还款公式:</label>
+                                <div class="col-sm-10">
+                                    <span class="midheight">截止当日未还月供总和(包括当月月供)<span ng-bind="onMonthPay===null?'--':onMonthPay"></span>元+剩余本金<span ng-bind="onSurplusCapital===null?'--':onSurplusCapital"></span>元+逾期费<span ng-bind="onOverdueMoney===null?'--':onOverdueMoney"></span>元+违约金<span ng-bind="onBreakContractMoney===null?'--':onBreakContractMoney"></span>元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">预计结清金额:</label>
+                                <div class="col-sm-3">
+                                    <span class="midheight" style="color: red" ng-bind="onExpectedMoney===null?0:onExpectedMoney|currency:'￥'" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">实际结清金额:</label>
+                                <div class="col-sm-10">
+                                    <span class="midheight" ng-bind="onExpectedMoney-onCutPrice|currency:'￥'" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">备注信息:</label>
+                                <div class="col-sm-10 has-error"   ng-init="onMarkInfoChange=false">
+                                    <textarea rows="3"  name="markInfo" ng-model="onMarkInfo" ng-class="{'markInfo-error': onMarkInfoChange&&onMarkInfo==''}" style="width:100%;max-width: 653.33px"></textarea>
+                                    <span ng-show="onMarkInfoChange&&onMarkInfo==''" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px;border-radius: 5px;color: #a94442" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bp text-center">
+                            <button type="button" class="btn btn-green" ng-click="onlineConfirm()">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--主动还款信息操作记录弹出窗-->
+    <div class="modal  fade" id="A_selfRepayInfoOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >还款信息操作记录</h5>
+                </div>
+                <div class="modal-body modalssthyhf">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr class="th">
+                            <th>时间</th>
+                            <th>操作对象</th>
+                            <th>操作内容</th>
+                            <th>操作结果</th>
+                            <th>实际还款</th>
+                            <th>还款凭证</th>
+                            <th>备注</th>
+                            <th>操作人</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-if="activeRecordData">
+                            <td colspan="8" class="text-center">暂时没有操作记录</td>
+                        </tr>
+                        <tr  ng-if="!activeRecordData" ng-repeat="item in activeRecordList">
+                            <td ng-bind="item.operatorTime?item.operatorTime:'--'|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <td ng-bind="item.operatorObject?item.operatorObject:'--'"></td>
+                            <td ng-bind="item.operatorContent?item.operatorContent:'--'"></td>
+                            <td ng-bind="item.operatorResult?item.operatorResult:'--'"></td>
+                            <td ng-bind="item.realTotalAmount?item.realTotalAmount:'--'|currency:'￥'"></td>
+                            <td ng-if="item.operatorImg.length===0">--</td>
+                            <td ng-if="item.operatorImg.length>0"><a ng-repeat="imgs in item.operatorImg" href="{{imgs}}" target="_blank"><img ng-src="{{imgs}}" width="30px" height="30px"/></a></td>
+                            <td ng-bind="item.operatorRemark?item.operatorRemark:'--'"></td>
+                            <td ng-bind="item.operator?item.operator:'--'"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--代扣记录弹出窗-->
+    <!--<div class="modal  fade" id="A_withHoldingOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">-->
+        <!--<div class="modal-dialog" style="width:880px;">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+                        <!--&times;-->
+                    <!--</button>-->
+                    <!--<h5 class="modal-title" >代扣记录</h5>-->
+                <!--</div>-->
+                <!--<div class="modal-body modalssthyhf">-->
+                    <!--<table class="table table-bordered text-center">-->
+                        <!--<thead>-->
+                        <!--<tr class="th">-->
+                            <!--<th>代扣期数</th>-->
+                            <!--<th>代扣时间</th>-->
+                            <!--<th>代扣结果</th>-->
+                            <!--<th>备注信息</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr ng-if="withholdRecordData">-->
+                            <!--<td colspan="4" class="text-center">暂时没有代扣记录</td>-->
+                        <!--</tr>-->
+                        <!--<tr ng-if="!withholdRecordData" ng-repeat="item in withholdRecordList">-->
+                            <!--<td ng-bind="item.operatorObject"><span ng-repeat="x in item.operatorObject">{{x}}<span ng-if="item.operatorObject.length>$index+1">、</span></span></td>-->
+                            <!--<td ng-bind="item.operatorTime===null?'&#45;&#45;':item.operatorTime|date:'yyyy-MM-dd HH:mm:ss'"></td>-->
+                            <!--<td ng-bind="item.operatorResult===null?'&#45;&#45;':item.operatorResult"></td>-->
+                            <!--<td ng-bind="item.operatorRemark===null?'&#45;&#45;':item.operatorRemark"></td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--线下还款弹出窗-->
+    <div class="modal  fade" id="A_lineOffRepayOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >线下还款</h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="formpadding" name="repayOffline">
+                        <div class="row rp">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-2 control-label midheight">减免金额:</label>
+                                <div class="col-sm-3"  ng-class="{'has-error': offCutPricesChange}" ng-init="offCutPricesChange=false">
+                                    <input type="text" class="form-control inpheight" ng-required="true" name="reliefAmount" ng-blur="judgeGoodsPrices()"  ng-model="offCutPrices">
+                                    <span ng-show="offCutPricesChange" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px" ></span>
+                                </div>
+                                <div class="col-sm-6 midheight" ng-if="errOffCutPrices">
+                                    <span  class="errorTip">减免金额不能大于实际应还总额减去本金总额</span>
+                                </div>
+                                <div class="col-sm-6 midheight" ng-if="emptyOffCutPrices && repayOffline.reliefAmount.$error.required">
+                                    <span  class="errorTip">减免金额不能为空</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">预计金额:</label>
+                                <div class="col-sm-10">
+                                    <span class="midheight">{{expectedMoneys===null?'0':expectedMoneys|currency:'￥'}}(公式：<span>截止当日未还月供总和(包括当月月供)<span ng-bind="monthPays===null?'--':monthPays"></span>元+剩余本金<span ng-bind="surplusCapitals===null?'--':surplusCapitals"></span>元+逾期费<span ng-bind="overdueMoneys===null?'--':overdueMoneys"></span>元+违约金<span ng-bind="breakContractMoneys===null?'--':breakContractMoneys"></span>元</span>
+)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">实际还款金额:</label>
+                                <div class="col-sm-10">
+                                    <span class="midheight" ng-bind="expectedMoneys-offCutPrices|currency:'￥'"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label midheight">转账凭证:</label>
+                                <div class="col-sm-10">
+                                    <div class="col-xs-10" style="padding: 0">
+                                        <div class="col-md-2"  style="margin-bottom: 10px;height: 50px;padding: 0" ng-repeat="item in translist_single">
+                                            <img class="elsePic" ng-src="{{item}}" >
+                                            <span  ng-click="delElsePic_single($index)" class="delElsePic">X</span>
+                                        </div>
+                                        <div class="col-md-2"  style="margin-bottom: 10px;height: 50px;padding: 0" ng-init="uploadings=false" ng-if="uploadings">
+                                            <img class="elsePic" src="../../resources/img/20151220191157048.gif" >
+                                        </div>
+                                        <div class="col-md-2"  style="margin-bottom: 10px;padding: 0;line-height:30px;color: #a94442" ng-init="translistNones=false" ng-if="translistNones&&translist_single.length==0">
+                                            请上传转账凭证
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2 text-right" style="padding-right: 0px">
+                                        <button class="btn btn-sm btn-primary" >上传照片</button>
+                                        <input type="file" style="width: 70px;height: 30px;position: absolute;left: 40px" onchange="angular.element(this).scope().transVoucher_upload_single(this.files,event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-2 control-label midheight">备注信息:</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="3" ng-model="offMarkInfos" style="width:100%;max-width: 653.33px" ng-class="{'markInfo-error': offMarkInfosChange&&offMarkInfos==''}"></textarea>
+                                    <span ng-show="offMarkInfosChange&&offMarkInfos==''" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px;border-radius: 5px;color: #a94442" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bp text-center">
+                            <button type="button" class="btn btn-green" ng-click="offlineConfirms(repayOfflinePaytime)">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--取消还款弹出窗-->
+    <div class="modal  fade" id="cancelRepayOper-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:880px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title" >取消还款</h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="formpadding" name="cancelRepay">
+                        <div class="row rp">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-1 control-label midheight">取消期数:</label>
+                                <div class="col-sm-3 midheight"  ng-class="{'has-error': offCutPricesChange}" ng-init="offCutPricesChange=false">
+                                第{{pay_time}}期
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group">
+                                <label  class="col-sm-1 control-label midheight"></label>
+                                <div class="col-sm-11">
+                                    <div class="col-sm-4" style="padding-left: 0px">客户：{{user_name?user_name:'--'}}/{{user_phone?user_phone:'--'|starHide}}</div>
+                                    <div class="col-sm-4" style="padding-left: 0px">第<span>{{pay_time}}</span>期月供 <span>{{pay_actual|currency:'￥'}}</span></div>
+                                    <div class="col-sm-4" style="padding-left: 0px">还款方式：<span>{{pay_type}}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-1 control-label midheight">申请人:</label>
+                                <div class="col-sm-11 "  ng-class="{'has-error': proposerChange && cancelRepay.proposer.$error.required}">
+                                    <input type="text" class="form-control inpheight" ng-required="true" maxlength="10" name="proposer"  ng-model="proposer">
+                                    <span ng-show="proposerChange && cancelRepay.proposer.$error.required" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px;border-radius: 5px;color: #a94442" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rp ">
+                            <div class="form-group has-feedback">
+                                <label  class="col-sm-1 control-label midheight">取消原因:</label>
+                                <div class="col-sm-11">
+                                    <textarea rows="3" ng-model="cancelReasons" style="width:100%;max-width: 721.66px" ng-class="{'markInfo-error': cancelReasonChange&&cancelReasons==''}"></textarea>
+                                    <span ng-show="cancelReasonChange&&cancelReasons==''" class="glyphicon glyphicon-remove form-control-feedback" style="right: 10px;top: -5px;border-radius: 5px;color: #a94442" ></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bp text-center">
+                            <button type="button" class="btn btn-green" ng-click="cancelConfirm(pay_time)">确定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+.text-overflow{
+    display:block;                     /*内联对象需加*/
+    width:31em;
+    word-break:keep-all;           /* 不换行 */
+    white-space:nowrap;          /* 不换行 */
+    overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow:ellipsis;         /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+.treeview .list-group-item{cursor:pointer;border-left: 0px;border-right: 0px;border-radius: 0px}.treeview span.indent{margin-left:5px;margin-right:10px}.treeview span.expand-collapse{width:1rem;height:1rem}.treeview span.icon{margin-left:10px;margin-right:5px}
+ #treeview .list-group,#photoArea .list-group{
+     border: 1px solid #d3d3d3;
+ }
+#treeview,#photoArea{background-color: white}

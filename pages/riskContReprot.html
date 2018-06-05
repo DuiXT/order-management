@@ -1,0 +1,515 @@
+<!--Created by chigantingting on 2017/11/7.-->
+<div ng-controller="riskReportCont">
+    <section class="content-header">
+        <h1>
+            风控报告
+            <small>Risk Control report</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 订单管理</a></li>
+            <li class="active"><a ui-sref="{{riskUrl1}}">{{listName}}列表</a></li>
+            <li class="active"><a ui-sref="{{riskUrl2}}">{{listName}}详情</a></li>
+            <li class="active">风控报告</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid rowline" id="repayDetail">
+        <!-- 内容部分-->
+        <!--客户信息-->
+        <div class="singlePart" style="margin-top: 0px">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#modelresult">
+                        <h4 class="panel-title">
+                            <div class="add_tit ">&nbsp;&nbsp;&nbsp;报告编号：<span ng-bind="eleData.reportCode!==null?eleData.reportCode:'--'"></span></div>
+                        </h4>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                <div class="col-md-6 text-right" >
+                    <h4 class="panel-title"  ng-bind="eleData.reportTime!==null?eleData.reportTime:'--'| date:'yyyy-MM-dd HH:mm:ss'"></h4>
+                </div>
+            </div>
+            <div id="modelresult" class="row panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="box-body" style="padding: 14px;">
+                        <div style="color: #B46262;font-size: 14px">模型结果: &nbsp;<span ng-bind="reportYysData.riskBaseInfo.modelResult!==null?reportYysData.riskBaseInfo.modelResult:'--'"></span></div><br>
+                        <div style="color: #B46262;font-size: 14px">警报: &nbsp;<span ng-if="reportYysData.riskBaseInfo.isWarning===0">--</span><span ng-if="reportYysData.riskBaseInfo.isWarning===1">有</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--基本信息-->
+        <div class="singlePart">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#primaryInfo">
+                        <h4 class="panel-title">
+                            <div class="add_tit ">&nbsp;&nbsp;&nbsp;基本信息</div>
+                        </h4>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                <div class="col-md-6 text-right" >
+
+                </div>
+            </div>
+            <div id="primaryInfo" class="row panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="box-body" style="padding: 14px;">
+                        <table id="product" class="table table-bordered">
+                            <tbody class="text-center">
+                            <tr>
+                                <td><b>姓名</b></td>
+                                <td ng-bind="eleData.userName!==null?eleData.userName:'--'"></td>
+                                <td><b>身份证号</b></td>
+                                <td ng-bind="eleData.userIdcert!==null?eleData.userIdcert:'--'"></td>
+                                <td><b>手机号</b></td>
+                                <td ng-bind="eleData.userPhone!==null?eleData.userPhone:'--'"></td>
+                                <td><b>年龄</b></td>
+                                <td ng-bind="eleData.userAge!==null?eleData.userAge:'--'"></td>
+                            </tr>
+                            <tr>
+                                <td><b>出生日期</b></td>
+                                <td ng-bind="eleData.userBirthday!==null?eleData.userBirthday:'--'| date:'yyyy-MM-dd'"></td>
+                                <td><b>身份证到期时间</b></td>
+                                <td ng-bind="eleData.idcertEnddate!==null?eleData.idcertEnddate:'--'| date:'yyyy-MM-dd'"></td>
+                                <td><b>身份证归属地</b></td>
+                                <td ng-bind="eleData.idcertAddress!==null?eleData.idcertAddress:'--'"></td>
+                                <td><b>性别</b></td>
+                                <td ng-bind="eleData.gender!==null?eleData.gender:'--'"></td>
+                            </tr>
+                            <tr >
+                                <td><b>返照</b></td>
+                                <td colspan="7" >
+                                    <div id="backPhoto" class="text-left" style="height: 150px" ng-show="backImg">
+                                        <img  data-original="data:image/png;base64,{{eleData.carrierOperatorReturnIdcertImg}}" height="150" ng-src="data:image/png;base64,{{eleData.carrierOperatorReturnIdcertImg}}" alt="返照">
+                                    </div>
+                                    <div class="text-left" style="height: 150px" ng-show="!backImg"  >
+                                        <img height="150" src="../resources/img/none.png" alt="返照">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>征信结果</b></td>
+                                <td colspan="7" class="text-left" ng-bind="eleData.resultFactors2!==null?eleData.resultFactors2:'--'"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--黑名单信息-->
+        <div class="singlePart">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#blackList">
+                        <h4 class="panel-title">
+                            <div class="add_tit ">&nbsp;&nbsp;&nbsp;黑名单信息</div>
+                        </h4>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                <div class="col-md-6" >
+                </div>
+            </div>
+            <div id="blackList" class="row panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="box-body" style="padding: 14px;">
+                        <table class="table table-bordered">
+                            <tbody class="text-center">
+                            <tr >
+                                <td width="17%"><b>同盾</b></td>
+                                <td style="white-space: normal">
+                                    <span style="color: red;font-size: 14px">分数：{{blackListScore}}</span>
+                                    <br>
+                                    <span  style="color: red;font-size: 14px">注:[{{blackListTxt}}]</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--运营商数据-->
+
+        <div class="singlePart">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <a data-toggle="collapse" data-parent="#accordion" data-target="#carrieroperatorData">
+                        <h4 class="panel-title">
+                            <div class="add_tit ">&nbsp;&nbsp;&nbsp;运营商数据</div>
+                        </h4>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                <div class="col-md-6 text-right" >
+                    <button class="btn btn-green" ng-disabled="refreshes" ng-click="refresh()">刷新</button>
+                </div>
+            </div>
+            <div id="carrieroperatorData" class="row panel-collapse collapse in">
+                <div class="panel-body" style="position: relative">
+                    <div class="box-body" id="carrieroperatorContent" style="padding: 14px;">
+                        <!--基础信息-->
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="tableTitle">
+                                <th colspan="8" class="text-center">基础信息</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <tr>
+                                <td><b>客户信息</b></td>
+                                <td>客户端提供信息</td>
+                                <td><b>姓名</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.userName!==null?reportYysData.riskBaseInfo.userName:'--'"></td>
+                                <td><b>身份证号</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.userIdcert!==null?reportYysData.riskBaseInfo.userIdcert:'--'"></td>
+                                <td><b>手机号</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.userPhone!==null?reportYysData.riskBaseInfo.userPhone:'--'"></td>
+                            </tr>
+                            <tr>
+                                <td><b>运营商返回</b></td>
+                                <td>数据方提供信息</td>
+                                <td><b>姓名</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.carrierOperatorReturnName!==null?reportYysData.riskBaseInfo.carrierOperatorReturnName:'--'"></td>
+                                <td><b>身份证号</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.carrierOperatorReturnIdcert!==null?reportYysData.riskBaseInfo.carrierOperatorReturnIdcert:'--'"></td>
+                                <td><b>手机号</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.carrierUserPhone!==null?reportYysData.riskBaseInfo.carrierUserPhone:'--'"></td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered" style="border-top: 0px">
+                            <tbody class="text-center" style="border-top: 0px">
+                            <tr>
+                                <td style="border-top: 0px"><b>是否实名认证</b></td>
+                                <td style="border-top: 0px"  ng-bind="reportYysData.riskBaseInfo.isRealnameAuthentication?'是':'否'">-</td>
+                                <td style="border-top: 0px"><b>手机归属地</b></td>
+                                <td style="border-top: 0px" ng-bind="reportYysData.riskBaseInfo.phoneLiveAddress!==null?reportYysData.riskBaseInfo.phoneLiveAddress:'--'"></td>
+                                <td style="border-top: 0px"><b>手机注册地</b></td>
+                                <td style="border-top: 0px" ng-bind="reportYysData.riskBaseInfo.phoneRegisterAddress!==null?reportYysData.riskBaseInfo.phoneRegisterAddress:'--'"></td>
+                            </tr>
+                            <tr>
+                                <td><b>入网时长</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.phoneTime!==null?reportYysData.riskBaseInfo.phoneTime:'--'"></td>
+                                <td><b>运营商</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.carrierOperator!==null?reportYysData.riskBaseInfo.carrierOperator:'--'"></td>
+                                <td><b>账户状态</b></td>
+                                <td ng-bind="reportYysData.riskBaseInfo.phoneState!==null?reportYysData.riskBaseInfo.phoneState:'--'"></td>
+                            </tr>
+                            <tr>
+                                <td ><b>手机号码标记</b></td>
+                                <td colspan="7" ng-bind="reportYysData.riskBaseInfo.phoneMark!==null?reportYysData.riskBaseInfo.phoneMark:'--'"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <!--行为检测-->
+                        <table class="table table-bordered" style="margin-top: 30px">
+                            <thead>
+                            <tr class="tableTitle">
+                                <th colspan="4" class="text-center">行为检测</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <tr>
+                                <td width="14%"><b>检测项目</b></td>
+                                <td colspan="3"><b>检测结果</b></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3"><b>通话号码及天数</b></td>
+                                <td colspan="3">互通电话的号码数量：<span ng-bind="reportYysData.riskBehaviorDetection.callMutualCt!==null?reportYysData.riskBehaviorDetection.callMutualCt:'--'"></span>个</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">有通话跨越天数：<span ng-bind="reportYysData.riskBehaviorDetection.callExistSpanDayct!==null?reportYysData.riskBehaviorDetection.callExistSpanDayct:'--'"></span>天</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">有通话的天数：<span ng-bind="reportYysData.riskBehaviorDetection.callExistDayct!==null?reportYysData.riskBehaviorDetection.callExistDayct:'--'"></span>天</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"><b>手机静默使用情况</b></td>
+                                <td colspan="3">最长联系静默天数：<span ng-bind="reportYysData.riskBehaviorDetection.maxSilenceDayct!==null?reportYysData.riskBehaviorDetection.maxSilenceDayct:'--'"></span>天</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">月均手机静默天数：<span ng-bind="reportYysData.riskBehaviorDetection.avgmonthSilenceDayct!==null?reportYysData.riskBehaviorDetection.avgmonthSilenceDayct:'--'"></span>天</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"><b>互通号码情况</b></td>
+                                <td colspan="3">互通号码个数：<span ng-bind="reportYysData.riskBehaviorDetection.callMutualCt!==null?reportYysData.riskBehaviorDetection.callMutualCt:'--'"></span>个</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">互通号码占比：<span ng-bind="reportYysData.riskBehaviorDetection.callMutualProportion!==null?reportYysData.riskBehaviorDetection.callMutualProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"><b>特殊号码通话记录</b></td>
+                                <td colspan="3">110号码通话记录：<span ng-bind="reportYysData.riskBehaviorDetection.call110Ct!==null?reportYysData.riskBehaviorDetection.call110Ct:'--'"></span>个</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">120号码通话记录：<span ng-bind="reportYysData.riskBehaviorDetection.call120Ct!==null?reportYysData.riskBehaviorDetection.call120Ct:'--'"></span>个</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3"><b>主被叫通话情况</b></td>
+                                <td colspan="3">主叫通话时长：<span ng-bind="reportYysData.riskBehaviorDetection.activecallWhenLong!==null?reportYysData.riskBehaviorDetection.activecallWhenLong:'--'"></span>分钟</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">被叫通话时长：<span ng-bind="reportYysData.riskBehaviorDetection.passivecallWhenLong!==null?reportYysData.riskBehaviorDetection.passivecallWhenLong:'--'"></span>分钟</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">主叫被叫比例：<span ng-bind="reportYysData.riskBehaviorDetection.activePassiveProportion!==null?reportYysData.riskBehaviorDetection.activePassiveProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="6"><b>通话时间段统计</b></td>
+                                <td><b>时间段</b></td>
+                                <td><b>次数（单位：次）</b></td>
+                                <td><b>占比</b></td>
+                            </tr>
+                            <tr>
+                                <td>凌晨通话</td>
+                                <td ng-bind="reportYysData.riskBehaviorDetection.callSmallHoursCt!==null?reportYysData.riskBehaviorDetection.callSmallHoursCt:'--'"></td>
+                                <td><span ng-bind="reportYysData.riskBehaviorDetection.callSmallHoursProportion!==null?reportYysData.riskBehaviorDetection.callSmallHoursProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                            <tr>
+                                <td>白天通话</td>
+                                <td ng-bind="reportYysData.riskBehaviorDetection.callDayCt!==null?reportYysData.riskBehaviorDetection.callDayCt:'--'"></td>
+                                <td><span ng-bind="reportYysData.riskBehaviorDetection.callDayProportion!==null?reportYysData.riskBehaviorDetection.callDayProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                            <tr>
+                                <td>晚上通话</td>
+                                <td ng-bind="reportYysData.riskBehaviorDetection.callNightCt!==null?reportYysData.riskBehaviorDetection.callNightCt:'--'"></td>
+                                <td><span ng-bind="reportYysData.riskBehaviorDetection.callNightProportion!==null?reportYysData.riskBehaviorDetection.callNightProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                            <tr>
+                                <td>周内通话</td>
+                                <td ng-bind="reportYysData.riskBehaviorDetection.callWorkingDayCt!==null?reportYysData.riskBehaviorDetection.callWorkingDayCt:'--'"></td>
+                                <td><span ng-bind="reportYysData.riskBehaviorDetection.callWorkingDayProportion!==null?reportYysData.riskBehaviorDetection.callWorkingDayProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                            <tr>
+                                <td>周末通话</td>
+                                <td ng-bind="reportYysData.riskBehaviorDetection.callWeekendCt!==null?reportYysData.riskBehaviorDetection.callWeekendCt:'--'"></td>
+                                <td><span ng-bind="reportYysData.riskBehaviorDetection.callWeekendProportion!==null?reportYysData.riskBehaviorDetection.callWeekendProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                        </table>
+
+                        <!--运营商统计信息-->
+                        <table class="table table-bordered" style="margin-top: 30px">
+                            <thead>
+                            <tr class="tableTitle">
+                                <th colspan="8" class="text-center">运营商统计信息</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <tr>
+                                <td rowspan="{{reportYysData.riskLinkerCall.length+1}}" style="width: 14%"><b>常用联系人通话统计</b></td>
+                                <td><b>联系人类型</b></td>
+                                <td><b>联系人姓名</b></td>
+                                <td><b>通讯录名称</b></td>
+                                <td><b>联系人电话</b></td>
+                                <td><b>通话总次数</b></td>
+                                <td><b>第一次通话时间</b></td>
+                                <td><b>最后一次通话时间</b></td>
+                            </tr>
+                            <tr ng-repeat="item in reportYysData.riskLinkerCall">
+                                <td ng-bind="item.linkerType!==null?item.linkerType:'--'"></td>
+                                <td ng-bind="item.linkerName!==null?item.linkerName:'--'"></td>
+                                <td ng-bind="item.mailListName!==null?item.mailListName:'--'"></td>
+                                <td ng-bind="item.linkerPhone!==null?item.linkerPhone:'--'"></td>
+                                <td ng-bind="item.linkerCallCt!==null?item.linkerCallCt:'--'"></td>
+                                <td ng-bind="item.firstCallTime!==null?item.firstCallTime:'--'| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td ng-bind="item.lastCallTime!==null?item.lastCallTime:'--'| date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered" style="border-top: 0px">
+                            <tbody class="text-center">
+                            <tr>
+                                <td style="border-top: 0px;width: 14%" rowspan="{{reportYysData.riskTop5CallAddress.length+1}}"><b>前五通话所在地</b></td>
+                                <td style="border-top: 0px"><b>联系地点</b></td>
+                                <td style="border-top: 0px"><b>通话次数（单位：次）</b></td>
+                                <td style="border-top: 0px"><b>通话时间（单位：秒）</b></td>
+                                <td style="border-top: 0px"><b>通话时间占比</b></td>
+                                <td style="border-top: 0px"><b>通话天数</b></td>
+                            </tr>
+                            <tr ng-repeat="item in reportYysData.riskTop5CallAddress">
+                                <td ng-bind="item.callAddress!==null?item.callAddress:'--'"></td>
+                                <td ng-bind="item.callCt!==null?item.callCt:'--'"></td>
+                                <td ng-bind="item.callWhenLong!==null?item.callWhenLong:'--'"></td>
+                                <td><span ng-bind="item.callProportion!==null?item.callProportion*100:'--'|number:2"></span>%</td>
+                                <td ng-bind="item.callDay!==null?item.callDay:'--'"></td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered" style="border-top: 0px">
+                            <tbody class="text-center">
+                            <tr>
+                                <td rowspan="{{reportYysData.riskLinkerAddressDistribution.length+1}}" style="width: 14%;border-top: 0px"><b>联系人地区分布</b></td>
+                                <td style="border-top: 0px"><b>地区</b></td>
+                                <td style="border-top: 0px"><b>联系人数量</b></td>
+                                <td style="border-top: 0px"><b>联系人占比</b></td>
+                                <td style="border-top: 0px"><b>主叫时长（分钟）</b></td>
+                                <td style="border-top: 0px"><b>主叫时长占比</b></td>
+                                <td style="border-top: 0px"><b>被叫时长（分钟）</b></td>
+                                <td style="border-top: 0px"><b>被叫时长占比</b></td>
+                            </tr>
+                            <tr ng-repeat="item in reportYysData.riskLinkerAddressDistribution">
+                                <td ng-bind="item.linkerRegion!==null?item.linkerRegion:'--'"></td>
+                                <td ng-bind="item.linkerCt!==null?item.linkerCt:'--'"></td>
+                                <td><span  ng-bind="item.linker!==null?item.linker*100:'--'|number:2"></span>%</td>
+                                <td ng-bind="item.activeWhenLong!==null?item.activeWhenLong:'--'"></td>
+                                <td><span  ng-bind="item.activeProportion!==null?item.activeProportion*100:'--'|number:2"></span>%</td>
+                                <td ng-bind="item.passiveWhenLong!==null?item.passiveWhenLong:'--'"></td>
+                                <td><span  ng-bind="item.passiveProportion!==null?item.passiveProportion*100:'--'|number:2"></span>%</td>
+                            </tr>
+                        </table>
+                        <!--前20联系人-->
+                        <div>
+                            <table class="table table-bordered"  style="border-top: 0px">
+                                <tbody class="text-center">
+                                <tr>
+                                    <td rowspan="{{reportYysData.riskTop20Linker.length+1}}" style="width: 14%;border-top: 0px"><b>前20最常联系人</b></td>
+                                    <td class="layui-table-cell" style="border-top: 0px"><b>序号</b><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" ng-class="{'edge-active':edgeSelected=='xhAsc'}" ng-click="sort20('xhAsc','serial_number')"></i><i class="layui-edge layui-table-sort-desc" ng-class="{'edge-active':edgeSelected=='xhDesc'}" ng-click="sort20('xhDesc','serial_number')"></i></span></td>
+                                    <td style="border-top: 0px">
+                                        <b>通话次数</b>
+                                        <span class="layui-table-sort layui-inline">
+                                        <i class="layui-edge layui-table-sort-asc" ng-class="{'edge-active':edgeSelected=='thAsc'}" ng-click="sort20('thAsc','call_ct')"></i>
+                                        <i class="layui-edge layui-table-sort-desc" ng-class="{'edge-active':edgeSelected=='thDesc'}" ng-click="sort20('thDesc','call_ct')"></i>
+                                    </span>
+                                    </td>
+                                    <td style="border-top: 0px">
+                                        <b>号码</b>
+                                        <span class="layui-table-sort layui-inline">
+                                        <i class="layui-edge layui-table-sort-asc" ng-class="{'edge-active':edgeSelected=='hmAsc'}" ng-click="sort20('hmAsc','call_phone')"></i>
+                                        <i class="layui-edge layui-table-sort-desc" ng-class="{'edge-active':edgeSelected=='hmDesc'}" ng-click="sort20('hmDesc','call_phone')"></i>
+                                    </span>
+                                    </td>
+                                    <td style="border-top: 0px">
+                                        <b>归属地</b>
+                                        <span class="layui-table-sort layui-inline">
+                                        <i class="layui-edge layui-table-sort-asc" ng-class="{'edge-active':edgeSelected=='gsdAsc'}" ng-click="sort20('gsdAsc','call_address')"></i>
+                                        <i class="layui-edge layui-table-sort-desc" ng-class="{'edge-active':edgeSelected=='gsdDesc'}" ng-click="sort20('gsdDesc','call_address')"></i>
+                                    </span>
+                                    </td>
+                                    <td style="border-top: 0px">
+                                        <b>通讯录姓名</b>
+                                        <span class="layui-table-sort layui-inline">
+                                        <i class="layui-edge layui-table-sort-asc" ng-class="{'edge-active':edgeSelected=='txlAsc'}" ng-click="sort20('txlAsc','mail_list_name')"></i>
+                                        <i class="layui-edge layui-table-sort-desc" ng-class="{'edge-active':edgeSelected=='txlDesc'}" ng-click="sort20('txlDesc','mail_list_name')"></i>
+                                    </span>
+                                    </td>
+                                    <td style="border-top: 0px">
+                                        <b>标记</b>
+                                        <span class="layui-table-sort layui-inline">
+                                        <i class="layui-edge layui-table-sort-asc" ng-class="{'edge-active':edgeSelected=='bjAsc'}" ng-click="sort20('bjAsc','mark')"></i>
+                                        <i class="layui-edge layui-table-sort-desc" ng-class="{'edge-active':edgeSelected=='bjDesc'}" ng-click="sort20('bjDesc','mark')"></i>
+                                    </span>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in reportYysData.riskTop20Linker">
+                                    <td ng-bind="item.serialNumber!==null?item.serialNumber:'--'"></td>
+                                    <td ng-bind="item.callCt!==null?item.callCt:'--'"></td>
+                                    <td ng-bind="item.callPhone!==null?item.callPhone:'--'"></td>
+                                    <td ng-bind="item.callAddress!==null?item.callAddress:'--'"></td>
+                                    <td ng-bind="item.mailListName!==null?item.mailListName:'--'"></td>
+                                    <td ng-bind="item.mark!==null?item.mark:'--'"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <table class="table table-bordered" style="border-top: 0px">
+                            <tbody class="text-center">
+                            <tr>
+                                <td rowspan="{{reportYysData.riskMonthUse.length+1}}" style="width: 14%;border-top: 0px"><b>月使用信息</b></td>
+                                <td style="border-top: 0px"><b>月份</b></td>
+                                <td style="border-top: 0px"><b>主叫次数</b></td>
+                                <td style="border-top: 0px"><b>主叫时长</b></td>
+                                <td style="border-top: 0px"><b>被叫次数</b></td>
+                                <td style="border-top: 0px"><b>被叫时长</b></td>
+                                <td style="border-top: 0px"><b>话费金额</b></td>
+                                <td style="border-top: 0px"><b>当月常用通话所在地</b></td>
+                            </tr>
+                            <tr ng-repeat="item in reportYysData.riskMonthUse">
+                                <td ng-bind="item.month!==null?item.month:'--'| date:'yyyy-MM' "></td>
+                                <td ng-bind="item.activeCt!==null?item.activeCt:'--'"></td>
+                                <td ng-bind="item.activeWhenLong!==null?item.activeWhenLong:'--'"></td>
+                                <td ng-bind="item.passiveCt!==null?item.passiveCt:'--'"></td>
+                                <td ng-bind="item.passiveWhenLong!==null?item.passiveWhenLong:'--'"></td>
+                                <td ng-bind="item.callMoney!==null?item.callMoney:'--'|currency:'￥'"></td>
+                                <td ng-bind="item.monthAddress!==null?item.monthAddress:'--'"></td>
+                            </tr>
+                        </table>
+
+                        <!--染黑信息-->
+                        <table class="table table-bordered" style="margin-top: 30px">
+                            <thead>
+                            <tr class="tableTitle">
+                                <th colspan="4" class="text-center">染黑信息</th>
+                            </tr>
+                            </thead>
+                            <tr ng-show="!riskPacraMarkDTO"><td colspan="4" class="text-center">暂无数据</td></tr>
+                            <tbody class="text-center" id="riskPacraMarkDTO" ng-show="riskPacraMarkDTO">
+                            <tr>
+                                <td>近一周与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTnumscon>0}" ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTnumscon!==null?reportYysData.riskPacraMarkDTO.allwdcnTnumscon:'--'"></span>个催收号码有过联系</td>
+                                <td>近一个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTnumscon>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTnumscon!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTnumscon:'--'"></span>个催收号码有过联系</td>
+                                <td>近三个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTnumscon>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTnumscon!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTnumscon:'--'"></span>个催收号码有过联系</td>
+                                <td>详单周期内与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTnumscon>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTnumscon!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTnumscon:'--'"></span>个催收号码有过联系</td>
+                            </tr>
+                            <tr>
+                                <td>近一周与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTnumsconBank>0}"  ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTnumsconBank!==null?reportYysData.riskPacraMarkDTO.allwdcnTnumsconBank:'--'"></span>家银行机构催收号码有过联系</td>
+                                <td>近一个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconBank>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconBank!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconBank:'--'"></span>家银行机构催收号码有过联系</td>
+                                <td>近三个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconBank>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconBank!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconBank:'--'"></span>家银行机构催收号码有过联系</td>
+                                <td>详单周期内与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconBank>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconBank!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconBank:'--'"></span>家银行机构催收号码有过联系</td>
+                            </tr>
+                            <tr>
+                                <td>近一周与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTnumsconCf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTnumsconCf!==null?reportYysData.riskPacraMarkDTO.allwdcnTnumsconCf:'--'"></span>家消费金融机构催收号码有过联系</td>
+                                <td>近一个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconCf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconCf!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconCf:'--'"></span>家消费金融机构催收号码有过联系</td>
+                                <td>近三个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconCf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconCf!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconCf:'--'"></span>家消费金融机构催收号码有过联系</td>
+                                <td>详单周期内与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconCf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconCf!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconCf:'--'"></span>家消费金融机构催收号码有过联系</td>
+                            </tr>
+                            <tr>
+                                <td>近一周与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTnumsconF>0}"  ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTnumsconF!==null?reportYysData.riskPacraMarkDTO.allwdcnTnumsconF:'--'"></span>家委外催收机构催收号码有过联系</td>
+                                <td>近一个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconF>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconF!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconF:'--'"></span>家委外催收机构催收号码有过联系</td>
+                                <td>近三个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconF>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconF!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconF:'--'"></span>家委外催收机构催收号码有过联系</td>
+                                <td>详单周期内与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconF>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconF!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconF:'--'"></span>家委外催收机构催收号码有过联系</td>
+                            </tr>
+                            <tr>
+                                <td>近一周与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTnumsconIf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTnumsconIf!==null?reportYysData.riskPacraMarkDTO.allwdcnTnumsconIf:'--'"></span>家互联网催收机构催收号码有过联系</td>
+                                <td>近一个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconIf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconIf!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconIf:'--'"></span>家互联网催收机构催收号码有过联系</td>
+                                <td>近三个月与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconIf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconIf!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconIf:'--'"></span>家互联网催收机构催收号码有过联系</td>
+                                <td>详单周期内与<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconIf>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconIf!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconIf:'--'"></span>家互联网催收机构催收号码有过联系</td>
+                            </tr>
+                            <tr>
+                                <td>近一周涉及催收号码的总机构数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTnumsconOrg>0}"  ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTnumsconOrg!==null?reportYysData.riskPacraMarkDTO.allwdcnTnumsconOrg:'--'"></span></td>
+                                <td>近一个月涉及催收号码的总机构数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconOrg>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconOrg!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTnumsconOrg:'--'"></span></td>
+                                <td>近三个月涉及催收号码的总机构数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconOrg>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconOrg!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTnumsconOrg:'--'"></span></td>
+                                <td>详单周期内涉及催收号码的总机构数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconOrg>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconOrg!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTnumsconOrg:'--'"></span></td>
+                            </tr>
+                            <tr>
+                                <td>近一周被催收号码呼叫次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTtimesin>0}"  ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTtimesin!==null?reportYysData.riskPacraMarkDTO.allwdcnTtimesin:'--'"></span></td>
+                                <td>近一个月被催收号码呼叫次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTtimesin>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTtimesin!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTtimesin:'--'"></span></td>
+                                <td>近三个月被催收号码呼叫次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTtimesin>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTtimesin!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTtimesin:'--'"></span></td>
+                                <td>详单周期内被催收号码呼叫次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTtimesin>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTtimesin!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTtimesin:'--'"></span></td>
+                            </tr>
+                            <tr>
+                                <td>近一周主叫催收号码次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.allwdcnTtimesout>0}"  ng-bind="reportYysData.riskPacraMarkDTO.allwdcnTtimesout!==null?reportYysData.riskPacraMarkDTO.allwdcnTtimesout:'--'"></span></td>
+                                <td>近一个月主叫催收号码次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1mwdcnTtimesout>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1mwdcnTtimesout!==null?reportYysData.riskPacraMarkDTO.l1mwdcnTtimesout:'--'"></span></td>
+                                <td>近三个月主叫催收号码次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l1wwdcnTtimesout>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l1wwdcnTtimesout!==null?reportYysData.riskPacraMarkDTO.l1wwdcnTtimesout:'--'"></span></td>
+                                <td>详单周期内主叫催收号码次数：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.l3mwdcnTtimesout>0}"  ng-bind="reportYysData.riskPacraMarkDTO.l3mwdcnTtimesout!==null?reportYysData.riskPacraMarkDTO.l3mwdcnTtimesout:'--'"></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-left">染黑分：<span ng-class="{'mark-red':reportYysData.riskPacraMarkDTO.grayscalescore>0}"   ng-bind="reportYysData.riskPacraMarkDTO.grayscalescore!==null?reportYysData.riskPacraMarkDTO.grayscalescore:'--'"></span> (说明：[250,+∞]：逾期风险极小；[100,250]：有一定逾期风险；[-∞,100]：逾期风险极大)</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <div class="form-group text-center">
+                    <button class="btn btn-green" ng-click="back()">返回</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

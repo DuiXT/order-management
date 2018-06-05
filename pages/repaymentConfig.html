@@ -1,0 +1,77 @@
+<div ng-controller="repaymentConfig as demo">
+    <section class="content-header">
+        <h1>
+            还款方式配置列表
+            <small>repayment mode configuration List</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 订单管理</a></li>
+            <li class="active">还款方式配置列表</li>
+        </ol>
+    </section>
+    <section class="content container-fluid">
+        <!-- 内容部分-->
+        <section class="content padmar0">
+            <div class="row">
+                <!-- 左边树状 -->
+                <div class="col-md-3"  id="MENU">
+                    <div class="box  shu" id="box" style="overflow: scroll;min-height: 764px;">
+                        <ul class="mtree">
+                            <li class="add_tit"><span  style="line-height: 25px;font-size: 18px;padding-left: 20px;color: #555">选择区域</span></li>
+                        </ul>
+                        <div class="htmleaf-container">
+                            <div class="htmleaf-content bgcolor-3" style="border-top: 1px solid grey">
+                                <!--树形结构-->
+                                <tree-view class="" tree-data="demo.tree" text-field="name" value-field='id' item-clicked="demo.itemClicked($item)" item-checked-changed="demo.itemCheckedChanged($item)" can-checked="true" ></tree-view>
+                                <script type="text/ng-template" id="/treeView.html">
+                                    <ul class=" mtree bubba">
+                                        <li ng-repeat="item in treeData" ng-include="'/treeItem.html'"  style="opacity: 1; transform: translateY(0px);"></li>
+                                    </ul>
+                                </script>
+
+                                <script type="text/ng-template" id="/treeItem.html">
+                                    <a ng-click="warpCallback('itemClicked', item, $event);"><i ng-click="itemExpended(item, $event);" class="{{getItemIcon(item)}}"></i>
+                                        <span class='text-field'  style="white-space:nowrap">{{item[textField]}}</span><span id="arrow" class="{{getItemArrow(item)}}"></span></a>
+                                    <ul ng-if="!isLeaf(item)" ng-show="item.$$isExpend">
+                                        <li style="opacity: 1; transform: translateY(0px);" ng-repeat="item in item.nodes" ng-include=" '/treeItem.html'"></li>
+                                    </ul>
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--右边表格-->
+                <div  class="col-md-8 padmar0">
+                    <div class="col-md-5">
+                        <div class="col-md-1"></div>
+                        <div >
+                            <ul class="mtree">
+                                <li><span  style="line-height: 25px">所属区域：{{nodename}}</span></li>
+                            </ul>
+                            <div class="htmleaf-container">
+                                <div class="htmleaf-content bgcolor-3">
+                                    <h4 style="letter-spacing: 5px">支持还款方式:</h4>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="padmar0">
+                                    <li ng-repeat="item in repayTypeList" class="mt15 form-group" style="font-size: 14px;position: relative"><input type="checkbox" id="{{item.name}}" ng-disabled="ckDisabled" class="chk_1" ng-checked="item.value" ng-click="controlSelection(item)"><label for="{{item.name}}" class="control-label" style="margin-top: 5px"></label><span style="display: block;position: absolute;top:8px;left: 30px">{{item.displayName}}</span></li>
+                                </ul>
+                            </div>
+                            <div ng-if="!editRepayMode" style="margin-top: 30px">
+                                <button class="btn btn-green btn-sm" ng-disabled="opering" ng-click="cancelOper()">取消</button>
+                                <button class="btn btn-green btn-sm" ng-disabled="opering"  style="margin-left: 15px" ng-click="confirmOper()">{{confirmText}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="margin-top: 50px">
+                        <button class="btn btn-green" ng-if="editRepayMode" ng-click="editOper()">编辑</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </section>
+</div>

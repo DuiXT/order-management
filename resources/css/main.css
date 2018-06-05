@@ -1,0 +1,340 @@
+
+    /*新建*/
+    body{font-family: "Microsoft YaHei";font-size: 12px;padding: 0;margin: 0}
+    html{position: relative}
+    .mr15{margin-right: 15px}
+    .ml15{margin-left: 15px}
+    .mt15{margin-top: 15px}
+    .padmar0{  padding: 0;  margin: 0;  }
+    .conditionItem{line-height: 28px;}
+    .conditionItem div{padding-left:5px;padding-right: 5px }
+    .conditionItem div input,.conditionItem div select{padding-left:5px;padding-right: 5px }
+    .dropdown-menu{font-size: 12px}
+    .bgw{background-color: white!important;}
+    .btn-green{background-color: #50AD92;  color: #ffffff;  border-color: #50AD92;  }
+    .btn-green:hover, .btn-green:active, .btn-green.hover {  background-color: #5AC3A5;  color: #ffffff;  }
+    .btn-green:visited,
+    .btn-green:focus{background-color: #489E85;  color: #ffffff;}
+    .rowline{margin: 15px 15px;background-color: white}
+    .add_tit{height:25px;line-height:25px; border-left:5px solid #367FA9;color:#367FA9;cursor: pointer }
+    #orderDetail label{font-weight: normal}
+    .singlePart{border-bottom: 1px solid #C9C9C9;padding-bottom: 15px;margin-top: 15px}
+    .showPhoto{height: 200px;background-color:#EDEDED;margin: auto;position: relative }
+    .showPhoto img{width: 100%;height: 200px;}
+    .auditRes{color:#C9C9C9 }
+    .operate span{
+        color: #50AD92;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .highLight{
+        background-color: #f4f4f4;
+    }
+    .normalFonts{
+        color: #333;
+    }
+    a.normalFonts:link{
+        color: #333;
+    }
+    a.normalFonts:hover{
+        color: #333;
+    }
+    a.normalFonts:visited{
+        color: #333;
+    }
+    a.normalFonts:active{
+        color: #333;
+    }
+    .caozuo a{
+        color: #50AD92;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .caozuo a:hover{
+        color: #5AC3A5;
+    }
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+    }
+    .editPic{
+        z-index: 111;
+        top:45%;
+        position: absolute;
+        width:99%;
+        margin-left: 1px;
+        height: 35px;
+    }
+    input[type="file"]{
+        opacity:0;top: 0px;position: absolute;left: 0px
+    }
+    .necessaryIcon{
+        color: red;
+    }
+
+    #editGoodsInfo select,#replaceBankInfo-data select {
+        height: 24px;
+        padding: 0;
+        left: 0;
+    }
+    .bgw{background-color: white}
+    .showOtherPhoto{
+        width: 150px;
+        height: 200px;
+        position: relative;
+    }
+    .showOtherPhoto img{
+        width: 150px;
+        height: 200px;
+        border: 1px solid #D4D4D4;
+    }
+    ._head{padding:10px 10px 2px 10px;}
+    .img_loading{
+        width:80%;height: auto;position: absolute;top: 30px;display: none;
+    }
+    td{vertical-align : middle!important;}
+    .tableTitle{background-color: #EDEDED}
+    .quxian
+    {
+        height: 30px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+
+
+
+
+    /*alert*/
+    .mask{
+        width: 100%;
+        height: 100%;
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 99999;
+        background-color: rgba(10,10,10,.3);
+    }
+    .dialog{
+        width: 382px;
+        height: 250px;
+        position: fixed;
+        top: 35%;
+        left: 40%;
+        background-color: #fff;
+        z-index:999999 !important;
+        display: none;
+    }
+    .dialog-title{
+        height: 48px;
+        line-height: 48px;
+        background-color: #f5f5f5;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-indent: 1.5em;
+        border-bottom: 1px solid #efefef;
+        cursor: move;
+    }
+    #alertlog .dialog-title{
+        height: 30px;
+        line-height: 30px;
+        background-color: #f5f5f5;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-indent: 1.5em;
+        border-bottom: 1px solid #efefef;
+        cursor: initial;
+    }
+    #alertlogs .dialog-title{
+        height: 30px;
+        line-height: 30px;
+        background-color: #f5f5f5;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-indent: 1.5em;
+        border-bottom: 1px solid #efefef;
+        cursor: initial;
+    }
+
+    .dialog-content{
+        padding: 5px;
+    }
+    .dialog-hint{
+        width: 100%;
+        height: 40%;
+        text-indent: 5rem;
+        font-size: 1rem;
+        line-height: 4rem;
+    }
+
+    .xianshi{
+        display: block;
+    }
+    .yinm
+    {
+        display: none;
+    }
+
+    .help-blocks
+    {
+        color: #A94442 !important;
+    }
+    .chacha
+    {
+        height: 24px !important;
+        line-height: 24px !important;
+        margin: 0 !important;
+        right: 10px !important;
+    }
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+    }
+    .bgcolor337AB7 {
+        background-color: #337AB7 !important;
+        color: #fff !important;
+    }
+
+    .elsePic{position: relative;width: 50px;height: 50px;z-index: 100;}
+    .delElsePic{display:block;width:15px;height:15px;line-height:15px;text-align: center; border-radius: 50%;background: #9d9d9d;color:#fff;cursor: pointer;position:absolute;top:-5px;right:35px;z-index: 101}
+    .markInfo-error{border: 1px solid #a94442}
+    /*排序箭头*/
+    .layui-table-cell {
+        height: 28px;
+        line-height: 28px;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+    .layui-table-sort {
+        width: 10px;
+        height: 20px;
+        margin-left: 5px;
+        cursor: pointer!important;
+    }
+     .layui-inline{
+        vertical-align: middle;
+         position: relative;
+    }
+    .layui-table-sort .layui-table-sort-asc {
+        top: 2px;
+        border-top: none;
+        border-bottom-style: solid;
+        border-bottom-color: #b2b2b2;
+    }
+    .layui-table-sort .layui-edge {
+        position: absolute;
+        left: 5px;
+        border-width: 5px;
+        cursor: pointer!important;
+    }
+    .layui-edge {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-width: 6px;
+        border-style: dashed;
+        border-color: transparent;
+        overflow: hidden;
+    }
+    .layui-table-sort .layui-table-sort-desc {
+        bottom: 2px;
+        border-bottom: none;
+        border-top-style: solid;
+        border-top-color: #b2b2b2;
+    }
+    .layui-edge:hover{
+        border-top-color:#000;
+        border-bottom-color:#000
+    }
+    .edge-active{
+        border-top-color:#000!important;
+        border-bottom-color:#000!important;
+    }
+
+    .table > tbody > tr > td{
+        padding: 8px 6px;
+    }
+    .select2-results__options{
+        -webkit-padding-start: 0px!important;
+        background-color: white;
+        width: 200px;
+        overflow: scroll;
+        border: 1px solid #dddddd;
+        max-height: 300px;
+    }
+    .select2-container{
+        display: block;
+        width:33.33333% !important;
+        overflow: hidden;
+        top: 215px!important;
+
+    }
+
+    .selection, .select2-selection__rendered,.select2-selection--single{
+        display: block;
+
+        overflow: hidden;
+    }
+    .select2-dropdown--below{
+        width: 200px!important;
+    }
+
+    .select2-selection__rendered{
+        line-height: 26px;
+    }
+    .selection{
+        width: 100% !important;
+    }
+    .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single{
+        width: 130px!important;
+        height: 30px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+    .select2-search__field{
+        width: 198px;
+    }
+    .photo-box{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start
+    }
+    .photo-box > div{
+        width: 13%;
+        margin-left: 20px;
+    }
+    .conditionItem span{
+        word-break: keep-all;
+    }
+    .mark-red{
+        font-size: 16px;
+        color: red;
+        font-weight: bold;
+    }
+    #example2 td,#example2 th{
+        white-space: nowrap;
+    }

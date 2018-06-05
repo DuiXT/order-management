@@ -1,0 +1,38 @@
+<!--Created by chigantingting on 2017/11/7.-->
+<div ng-controller="overdueDetailCont">
+    <section class="content-header">
+        <h1>
+            订单详情
+            <small ng-bind="subTitle"></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 订单管理</a></li>
+            <li class="active">逾期列表</li>
+            <li class="active">订单详情</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid rowline">
+        <!-- 内容部分-->
+        <!--客户信息-->
+        <div custom-info btn="viewBtn"   data="orderDetail" user-info="{{userInfo}}"></div>
+        <!--信审照片-->
+        <div audit-photos btn="viewBtn" data="auditphotosDetail" user-info="{{userInfo}}"  ></div>
+        <!--单位信息-->
+        <div company-info btn="viewBtn"  data="companyDetail" user-info="{{userInfo}}"></div>
+        <!--商品信息-->
+        <div goods-info btn="viewBtn" data="goodsDetail" user-info="{{userInfo}}"></div>
+        <!--抽查联系人-->
+        <div tel-resch  data="telreschDetail" btn="viewBtn" user-info="{{userInfo}}"></div>
+        <!--绑卡信息-->
+        <div bind-card-info  data="bindcardDetail" btn="viewBtn" user-info="{{userInfo}}"></div>
+        <!--合同信息-->
+        <div contract-info  data="contractDetail"></div>
+        <!--还款信息-->
+        <div repayment-info  data="repayDetail" btn="viewBtn" user-info="{{userInfo}}"  due="dueView"></div>
+        <!--提货照片-->
+        <div goods-photos  data="goodsphotosDetail" btn="viewBtn" user-info="{{userInfo}}"></div>
+        <!--返回列表-->
+        <div back-list  go-back="back()"></div>
+    </section>
+</div>

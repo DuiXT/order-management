@@ -1,0 +1,42 @@
+<div ng-controller="auditDetailCont">
+    <section class="content-header">
+        <h1>
+            信审详情-<small style="color: black" ng-bind="subTitle"></small>
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 订单管理</a></li>
+            <li class="active"><a ui-sref="creditAuditList">信审列表</a></li>
+            <li class="active">信审详情</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content container-fluid rowline" id="auditDetail">
+        <!-- 内容部分-->
+        <!--客户信息-->
+        <div custom-info  data="custominfot" btn="viewBtn" btn-pre="previewbtn" parent-bizid="{{pBizid}}"   user-info="{{userInfo}}" type="{{listType}}" custom-sures="Company()"></div>
+
+        <!--信审照片-->
+        <div audit-photos  data="imageInfo"  btn="viewBtn" reject-photo="rejectPhoto"  user-info="{{userInfo}}"   list-img="modifyListImgArr"></div>
+
+        <!--单位信息-->
+        <div company-info data="unitInfoList" btn="viewBtn" puser-code="{{puserCode}}"   user-info="{{userInfo}}" custom-sures="Company()"></div>
+
+        <!--商品信息-->
+        <div goods-info data="goodsInfo" btn="viewBtn" parent-bizid="{{pBizid}}" get-data="Company()"  user-info="{{userInfo}}" ></div>
+
+        <!--风控信息-->
+        <div risk-info  data="riskinfo" list-type="{{listType}}"  user-info="{{userInfo}}" report-ele-data="{{eleData}}" report-yys-data="{{yysData}}" is-auth="{{isAuth}}"></div>
+
+        <!--抽查联系人-->
+        <div tel-resch data="telresch" user-info="{{userInfo}}" btn="viewBtn" get-data="Company()"></div>
+
+        <!--备注信息-->
+        <div remark-info data="remarkInfo"></div>
+
+        <!--信审结果-->
+        <div audit-operation child-operating="operating"  reject-photo="rejectPhoto" ng-show="viewBtn"  edit-picture="editPicture" go-back="back()"  parent-bizid="{{pBizid}}" p-ordercode="{{pOrdercode}}"  sure-operations="sureOperationsList(obj)"></div>
+        <!--返回列表-->
+        <div back-list ng-show="!viewBtn" go-back="back()"></div>
+    </section>
+</div>
